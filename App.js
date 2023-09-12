@@ -17,8 +17,9 @@ const App = () => {
         <Text>HomeScreen</Text>
       </View>
 
-      
-
+       <Button
+          title="Brands"
+       />
 
   );
 };
