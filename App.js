@@ -1,37 +1,32 @@
-
 import React from 'react'; 
 import {
   StyleSheet, 
   Pressable, 
   Button,
   View,
-  Text 
+  Text,
+  SafeAreaView,
+  TextInput,
 } from 'react-native';
 
 
 const App = () => {
   const [text, onChangeText] = React.useState('Search');
   return (
-    <View   // Roughly where the searchbar will go 
-       style={{
-       width: 200,
-       height: 200,
-       padding: 40,
-      }}>
-       <Text>HomeScreen</Text>
-
-       <View style={styles.buttonContainer}>
+   
+<SafeAreaView style={styles.container}>
+  
+  <View style={styles.buttonContainer}>
       <Button
-          
-          color='pink'
-          title="Brands"
-          
-      />
-      </View>
+        color = 'pink'
+        title="Brands"
+      /> 
 
-    
+     
+  </View>
+</SafeAreaView>
 
-    </View>
+
      
       
 
@@ -47,12 +42,9 @@ const styles = StyleSheet.create({
     padding:10,
   },
   buttonContainer: {
-    width: 250,
-    heigth: 156,
-    marginHorizontal: 20, 
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 10,
+    padding: 5,
     borderColor: 'black'
   },
   button: {
@@ -87,4 +79,3 @@ const styles = StyleSheet.create({
 });
 
 export default App; 
- 
