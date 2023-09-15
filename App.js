@@ -5,6 +5,7 @@ import {
   Button,
   View,
   Text,
+  TouchableOpacity,
   SafeAreaView,
   TextInput,
 } from 'react-native';
@@ -13,22 +14,31 @@ import {
 const App = () => {
   const [text, onChangeText] = React.useState('Search');
   return (
-   
-<SafeAreaView style={styles.container}>
-  
-  <View style={styles.buttonContainer}>
-      <Button
-        color = 'pink'
-        title="Brands"
-      /> 
-
-     
-  </View>
-</SafeAreaView>
-
-
-     
       
+      <SafeAreaView style={styles.container}>
+        <TouchableOpacity 
+          onPress={ () => {
+            console.log('button was pressed');
+          }}
+          style={styles.buttonContainer}
+        >
+            <Text style={styles.buttonText2}>Restaurants</Text>
+          
+
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          onPress={ () => {
+            console.log('button was pressed');
+          }}
+          style={styles.brandsButtonContainer}
+        >
+          <Text style={styles.buttonText2}>Brands</Text>
+      
+
+        </TouchableOpacity>
+
+      </SafeAreaView>
 
 
   );
@@ -42,10 +52,48 @@ const styles = StyleSheet.create({
     padding:10,
   },
   buttonContainer: {
+    height: 50,
+    marginHorizontal: 10,
+    backgroundColor: '#545f71',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical:20,
+  },
+  brandsButtonContainer: {
+    height: 50,
+    marginHorizontal: 10,
+    backgroundColor: '#545f71',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical:20, 
+  },
+  buttonText:{
+    textTransform: 'uppercase',
+    color: '#fff',
+    fontSize: 18,
+  },
+  buttonText2:{
+    textTransform: 'uppercase',
+    color: '#fff',
+    fontSize: 18,
+  },
+  buttonBrandContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 5,
-    borderColor: 'black'
+    position: 'absolute',
+    top: 370,
+    paddingVertical: 90,
+    paddingHorizontal: 60,
+    borderColor: 'black',
+  },
+  buttonRestContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    //position: 'absolute',
+    //top: 370,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderColor: 'black',
   },
   button: {
     backgroundColor: 'green', 
@@ -59,23 +107,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    //alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 18,
-    borderColor: 'black'
-  },
-  title: {
-    textAlign: 'center',
-    marginVertical: 8,
-  },
-  fixToText: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  separator: {
-    marginVertical: 8,
-    borderBottomColor: '#737373',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    //padding: 10,
   },
 });
 
 export default App; 
+ 
