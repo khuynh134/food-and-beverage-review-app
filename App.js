@@ -18,6 +18,8 @@ const App = () => {
       <SafeAreaView style={styles.container}>
         
         <Text style={styles.title}>Food & Beverage Review App</Text>
+
+        <img src={require('./FABRAlogo.png')} alt="FABRA logo"/>
         
         <TouchableOpacity 
           onPress={ () => {
