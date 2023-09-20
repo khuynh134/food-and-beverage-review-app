@@ -1,7 +1,8 @@
 import React from 'react'; 
-import logo from './FABRAlogo.png';
+import logo from './assets/FABRAlogo.png';
 import {
-  StyleSheet, 
+  StyleSheet,
+  Image, 
   Pressable, 
   Button,
   View,
@@ -21,7 +22,7 @@ const App = () => {
         
         <Text style={styles.title}>Food & Beverage Review App</Text>
 
-        <img src={logo} alt="FABRA logo" height={200} width={200}/>
+        <Image source={logo} alt="FABRA logo" height={200} width={200}/>
         
         <TouchableOpacity 
           onPress={ () => {
