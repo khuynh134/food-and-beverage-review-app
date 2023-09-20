@@ -22,7 +22,7 @@ const App = () => {
         
         <Text style={styles.title}>Food & Beverage Review App</Text>
 
-        <Image source={logo} alt="FABRA logo" height={200} width={200}/>
+        <Image source={logo} style={{height: 100, width: 100}} />
         
         <TouchableOpacity 
           onPress={ () => {
