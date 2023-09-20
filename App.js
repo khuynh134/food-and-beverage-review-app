@@ -1,4 +1,5 @@
 import React from 'react'; 
+import logo from './FABRAlogo.png';
 import {
   StyleSheet, 
   Pressable, 
@@ -13,13 +14,14 @@ import {
 
 const App = () => {
   const [text, onChangeText] = React.useState('Search');
+  console.log(logo);
   return (
       
       <SafeAreaView style={styles.container}>
         
         <Text style={styles.title}>Food & Beverage Review App</Text>
 
-        <img src={require('./FABRAlogo.png')} alt="FABRA logo"/>
+        <img src={logo} alt="FABRA logo" height={200} width={200}/>
         
         <TouchableOpacity 
           onPress={ () => {
