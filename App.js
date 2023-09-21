@@ -10,15 +10,18 @@ import {
   TextInput,
 } from 'react-native';
 
+import SearchBar from './components/SearchBar'
 
 const App = () => {
   const [text, onChangeText] = React.useState('Search');
   return (
       
       <SafeAreaView style={styles.container}>
-        
+
         <Text style={styles.title}>Food & Beverage Review App</Text>
-        
+
+        <SearchBar/>
+
         <TouchableOpacity 
           onPress={ () => {
             console.log('button was pressed');
