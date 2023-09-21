@@ -1,6 +1,8 @@
 import React from 'react'; 
+import logo from './assets/FABRAlogo.png';
 import {
-  StyleSheet, 
+  StyleSheet,
+  Image, 
   Pressable, 
   Button,
   View,
@@ -9,20 +11,24 @@ import {
   SafeAreaView,
   TextInput,
 } from 'react-native';
-
 import SearchBar from './components/SearchBar'
 
 const App = () => {
   const [text, onChangeText] = React.useState('Search');
+  console.log(logo);
   return (
       
       <SafeAreaView style={styles.container}>
 
         <Text style={styles.title}>Food & Beverage Review App</Text>
 
-        <SearchBar/>
-
-        <TouchableOpacity 
+        //can't directly upload git repository into expo snack due to png file
+        //must copy-paste app.js, import logo file, then move it into assets folder to run
+        <Image source={logo} style={styles.logostyle} />
+        
+        
+         <SearchBar/>
+         <TouchableOpacity 
           onPress={ () => {
             console.log('button was pressed');
           }}
@@ -68,19 +74,25 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     color: '#44ccb4',
-    marginTop: 10,
-    paddingVertical: 10,
+    paddingVertical: 5,
     paddingHorizontal: 5,
     borderWidth: 4,
     borderColor: '#545f71',
     borderRadius: 6,
-    backgroundColor: '#edf2f1',
+    backgroundColor: '#f3fafb',
     textAlign: 'center',
     fontWeight: 'bold',
     position: 'absolute',
-    top: '3%',
+    top: '4%',
     right: '2%',
-    left: '25%',
+    left: '30%',
+  },
+  logostyle: {
+    height: 100,
+    width: '25%',
+    position: 'absolute',
+    top: '4%',
+    left: '2%',
   },
   buttonContainer: {
     height: 100,
