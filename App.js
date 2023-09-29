@@ -58,7 +58,6 @@ const App = () => {
           <Text style={styles.buttonText}>+ Add Item</Text>
       
         </TouchableOpacity>
-
       </SafeAreaView>
   );
 };
