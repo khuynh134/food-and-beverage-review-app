@@ -14,6 +14,35 @@ import {
   TextInput,
 } from 'react-native';
 
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomeScreen from "./components/HomeScreen"
+import AddItem from "./components/AddItem"
+
+const Stack = createNativeStackNavigator();
+
+function MyStack(){
+  return(
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          headerShown: false 
+        }}
+      />
+      <Stack.Screen
+        name="AddItem"
+        component={AddItem}
+        options={{
+          headerTintColor: 'black',
+          headerStyle: {backgroundColor: 'tomato'}
+        }}
+      />
+    </Stack.Navigator>
+  )
+}
+
 const App = () => {
   const [text, onChangeText] = React.useState('Search');
   console.log(logo);
@@ -21,12 +50,12 @@ const App = () => {
       
       <SafeAreaView style={styles.container}>
 
-        <Text style={styles.title}>Food & Beverage Review App</Text>
+        <NavigationContainer>
+          <MyStack />
+        </NavigationContainer>
 
-        <Image source={logo} style={styles.logostyle} />
         
-        
-         <SearchBar/>
+
          <TouchableOpacity 
           onPress={ () => {
             console.log('button was pressed');
@@ -48,16 +77,6 @@ const App = () => {
       
         </TouchableOpacity>
 
-
-        <TouchableOpacity 
-          onPress={ () => {
-            console.log('button was pressed');
-          }}
-          style={styles.buttonContainer2}
-        >
-          <Text style={styles.buttonText}>+ Add Item</Text>
-      
-        </TouchableOpacity>
       </SafeAreaView>
   );
 };
