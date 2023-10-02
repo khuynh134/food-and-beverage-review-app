@@ -18,6 +18,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./components/HomeScreen"
 import AddItem from "./components/AddItem"
+import Restaurants from "./components/Restaurants"
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +40,14 @@ function MyStack(){
           headerStyle: {backgroundColor: 'tomato'}
         }}
       />
+       <Stack.Screen
+        name="Restaurants"
+        component={Restaurants}
+        options={{
+          headerTintColor: 'black',
+          headerStyle: {backgroundColor: 'blue'}
+        }}
+      />
     </Stack.Navigator>
   )
 }
@@ -55,16 +64,8 @@ const App = () => {
         </NavigationContainer>
 
         
-
-         <TouchableOpacity 
-          onPress={ () => {
-            console.log('button was pressed');
-          }}
-          style={styles.buttonContainer}
-        >
-            <Text style={styles.buttonText}>Restaurants</Text>
-          
-        </TouchableOpacity>
+        
+        
 
 
         <TouchableOpacity 

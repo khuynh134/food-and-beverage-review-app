@@ -15,8 +15,14 @@ export default function HomeScreen({navigation}){
 
         <SearchBar/>
 
-        <TouchableOpacity  onPress={ () =>navigation.navigate("AddItem")}
+        <TouchableOpacity onPress={ () =>navigation.navigate("Restaurants")}
             style={styles.buttonContainer}
+        >
+            <Text style={styles.buttonText}>Restaurants</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity  onPress={ () =>navigation.navigate("AddItem")}
+            style={styles.buttonContainer2}
         >
            <Text style={styles.buttonText}>+ Add Item</Text>
         </TouchableOpacity>
