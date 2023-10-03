@@ -45,7 +45,7 @@ function MyStack(){
         component={Restaurants}
         options={{
           headerTintColor: 'black',
-          headerStyle: {backgroundColor: 'blue'}
+          headerStyle: {backgroundColor: '#c7e1ff'}
         }}
       />
     </Stack.Navigator>
