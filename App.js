@@ -19,6 +19,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./components/HomeScreen"
 import AddItem from "./components/AddItem"
 import Restaurants from "./components/Restaurants"
+import Brands from "./components/Brands"
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +49,14 @@ function MyStack(){
           headerStyle: {backgroundColor: '#c7e1ff'}
         }}
       />
+        <Stack.Screen
+        name="Brands"
+        component={Brands}
+        options={{
+          headerTintColor: 'black',
+          headerStyle: {backgroundColor: '#c7e1ff'}
+        }}
+      />
     </Stack.Navigator>
   )
 }
@@ -68,15 +77,7 @@ const App = () => {
         
 
 
-        <TouchableOpacity 
-          onPress={ () => {
-            console.log('button was pressed');
-          }}
-          style={styles.buttonContainer}
-        >
-          <Text style={styles.buttonText}>Brands</Text>
-      
-        </TouchableOpacity>
+       
 
       </SafeAreaView>
   );

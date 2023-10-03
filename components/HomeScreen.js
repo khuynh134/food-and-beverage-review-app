@@ -21,6 +21,12 @@ export default function HomeScreen({navigation}){
             <Text style={styles.buttonText}>Restaurants</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity  onPress={ () =>navigation.navigate("Brands")}
+            style={styles.buttonContainer}
+        >
+           <Text style={styles.buttonText}>Brands </Text>
+        </TouchableOpacity>
+
         <TouchableOpacity  onPress={ () =>navigation.navigate("AddItem")}
             style={styles.buttonContainer2}
         >
