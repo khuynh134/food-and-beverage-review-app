@@ -4,7 +4,7 @@
     "slug": "foodrecapp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./Screens/assets/FABRAlogo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
