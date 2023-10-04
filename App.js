@@ -1,67 +1,30 @@
-import React from 'react'; 
-import logo from './assets/FABRAlogo.png';
-import styles from './style-sheet';
-import SearchBar from './components/SearchBar';
-import {
-  StyleSheet,
-  Image, 
-  Pressable, 
-  Button,
-  View,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  TextInput,
-} from 'react-native';
+import * as React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+// Import Screens here
+import HomeScreen from './Screens/HomeScreen';
+import AddItemScreen from './Screens/AddItemScreen';
+import BrandsScreen from './Screens/BrandsScreen';
+import RestaurantScreen from './Screens/RestaurantScreen';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const [text, onChangeText] = React.useState('Search');
-  console.log(logo);
   return (
-      
-      <SafeAreaView style={styles.container}>
-
-        <Text style={styles.title}>Food & Beverage Review App</Text>
-
-        <Image source={logo} style={styles.logostyle} />
-        
-        
-         <SearchBar/>
-         <TouchableOpacity 
-          onPress={ () => {
-            console.log('button was pressed');
-          }}
-          style={styles.buttonContainer}
-        >
-            <Text style={styles.buttonText}>Restaurants</Text>
-          
-        </TouchableOpacity>
-
-
-        <TouchableOpacity 
-          onPress={ () => {
-            console.log('button was pressed');
-          }}
-          style={styles.buttonContainer}
-        >
-          <Text style={styles.buttonText}>Brands</Text>
-      
-        </TouchableOpacity>
-
-
-        <TouchableOpacity 
-          onPress={ () => {
-            console.log('button was pressed');
-          }}
-          style={styles.buttonContainer2}
-        >
-          <Text style={styles.buttonText}>+ Add Item</Text>
-      
-        </TouchableOpacity>
-
-      </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{title: 'Home'}}
+        />
+        <Stack.Screen name="Restaurants"  component={RestaurantScreen}/>
+        <Stack.Screen name="Brands"       component={BrandsScreen}    />
+        <Stack.Screen name="Add Item"     component={AddItemScreen}   />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
-export default App; 
- 
+export default App;

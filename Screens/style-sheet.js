@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       marginVertical:20,
     },
-    buttonContainer2: {
+    /*buttonContainer2: {
       height: 100,
       marginHorizontal: '2%',
       backgroundColor: '#545f71',
@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
       position: 'absolute',
       bottom: '3%',
       width: '96%',
-    },
+    },*/
+    // Add Item Button elements
     buttonText:{
       textTransform: 'uppercase',
       color: '#fff',
@@ -62,6 +63,9 @@ const styles = StyleSheet.create({
       //padding: 10,
       backgroundColor: '#f0fbfa',
     },
+    temp: {
+      marginTop: 150
+    }
   });
 
   export default styles;

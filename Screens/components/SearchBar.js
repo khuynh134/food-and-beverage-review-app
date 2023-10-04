@@ -16,6 +16,7 @@ const SearchBar = () => {
                 <Icon name='search' style={styles.icon} size={20}/>
             </View>
             </TouchableOpacity>
+            
             <View style={styles.searchBar}>
                 <TextInput 
                     style={styles.input} placeholder='Search here...'
