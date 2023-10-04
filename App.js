@@ -11,6 +11,8 @@ import RestaurantScreen from './Screens/RestaurantScreen';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  const [text, onChangeText] = React.useState('Search');
+  console.log(logo);
   return (
     <NavigationContainer>
       <Stack.Navigator>
