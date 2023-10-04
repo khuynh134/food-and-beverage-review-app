@@ -10,21 +10,52 @@ import RestaurantScreen from './Screens/RestaurantScreen';
 
 const Stack = createNativeStackNavigator();
 
+function MyStack(){
+  return(
+    <Stack.Navigator>
+      <Stack.Screen
+      name="Home"
+      component={HomeScreen}
+      options={{title: 'Home'}}
+      />
+      <Stack.Screen
+      name="Restaurants"
+      component={RestaurantScreen}
+      options={{
+        title: 'Restaurants',
+        headerTitleStyle:{
+          fontWeight: 'bold',
+        },
+        headerTintColor: 'black',
+        headerStyle: {backgroundColor: '#c7e1ff'}
+      }}
+      />
+      <Stack.Screen
+      name="Brands"
+      component={BrandsScreen}
+      options={{
+        headerTintColor: 'black',
+        headerStyle: {backgroundColor: '#c7e1ff'}
+      }}
+      />
+      <Stack.Screen
+      name="Add Item"
+      component={AddItemScreen}
+      options={{
+        headerTintColor: 'black',
+        headerStyle: {backgroundColor: '#c7e1ff'}
+      }}
+      />
+    </Stack.Navigator>
+  )
+}
+
 const App = () => {
   const [text, onChangeText] = React.useState('Search');
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{title: 'Home'}}
-        />
-        <Stack.Screen name="Restaurants"  component={RestaurantScreen}/>
-        <Stack.Screen name="Brands"       component={BrandsScreen}    />
-        <Stack.Screen name="Add Item"     component={AddItemScreen}   />
-      </Stack.Navigator>
+     <MyStack />
     </NavigationContainer>
   );
 };

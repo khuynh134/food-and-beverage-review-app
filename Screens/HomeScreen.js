@@ -43,7 +43,7 @@ const Home = ({ navigation }) => {
                 <TouchableOpacity style={styles.buttonContainer}
                     onPress={()=> {navigation.navigate('Add Item')}}
                     title='Add Item'>
-                    <Text style={styles.buttonText}>add Item</Text>
+                    <Text style={styles.buttonText}>+ Add Item</Text>
                 </TouchableOpacity>
             </View>
 
