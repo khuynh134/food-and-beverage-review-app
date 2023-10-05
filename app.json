@@ -2,6 +2,7 @@
   "expo": {
     "name": "foodrecapp",
     "slug": "foodrecapp",
+    "owner": "fabra",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./Screens/assets/FABRAlogo.png",
