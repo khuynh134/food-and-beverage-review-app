@@ -41,7 +41,7 @@ export default function AddItemScreen({ navigation }){
     }
 
     const [itemName, setItemName] = useState('');
-    const parent = null;
+    const parent = '';
     const [parentName, setParentName] = useState('');
     const [notes, setNotes] = useState('');
     
@@ -53,7 +53,7 @@ export default function AddItemScreen({ navigation }){
                 <View style={styles.NameContainer}>
                     <Text style={{ width: '90%', fontSize: 25 }}>Name:</Text>
                     <View style={styles.NameBar}>
-                        <TextInput  style={{ fontSize: 17 ,marginLeft: 5 }}
+                        <TextInput  style={{ fontSize: 17, marginLeft: 5 }}
                                     placeholder="Enter Name Here..."
                                     value={itemName}
                                     onChangeText={(text) => setItemName(text)}></TextInput>
@@ -109,12 +109,12 @@ export default function AddItemScreen({ navigation }){
 
                 <View style={styles.submitContainer}>
                     <TouchableOpacity   style={styles.submitButton}
-                                        onPress={() => {addReview(itemName, parent, parentName, defaultRating, notes)}}>
+                                        onPress={() => {(itemName == '' || parent == '' || parentName == '') ? console.log("Invalid input") : addReview(itemName, parent, parentName, defaultRating, notes)}}>
                         <Text style={{fontSize: 22, color: '#FFF'}}>Submit</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-            
+
         </SafeAreaView>
         </KeyboardAvoidingWrapper>
 
