@@ -63,6 +63,18 @@ const styles = StyleSheet.create({
     },
     temp: {
       marginTop: 150
+    },
+    listView: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingLeft: '4%',
+      paddingRight: '3%',
+      paddingTop: '2%',
+    },
+    listText: {
+      fontSize: 20,
     }
   });
 

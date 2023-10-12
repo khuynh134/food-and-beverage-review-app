@@ -1,29 +1,36 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import realm, {getAllRestaurants} from './components/Database';
+import {View, Text, FlatList} from 'react-native';
+import styles from './style-sheet';
+import realm, {addRestaurant, getAllRestaurants, deleteAllRestaurants} from './components/Database';
 
 export default function RestaurantScreen({ navigation }){
-    for(let i = 0; i < 3; i++){
-        realm.write(() => {
-          const restaurant = realm.create('Restaurant', {
-            RestaurantName: 'Chik-Fil-A' + i,
-            Menu: 'Chik-Fil-A Nuggets'
-          });
-        });
-      }
+  addRestaurant("Popeye's");
+  addRestaurant('Chik-Fil-A');
 
-      realm.write(() => {
-        const restaurant = realm.create('Restaurant', {
-          RestaurantName: "Popeye's",
-          Menu: 'Popcorn Shrimp'
-        });
-      });
-
-    return(
-        <View style={{flex: 1,justifyContent: 'center', alignItems: 'center'}}>
-            <Text>This is the Restaurant Screen</Text>
-            <Text>{JSON.stringify(getAllRestaurants())}</Text>
-            <Text>Test text.</Text>
-        </View>
-    );
+  return(
+  <FlatList
+      data={getAllRestaurants()}
+      keyExtractor={(item, index) => index.toString()}
+      renderItem={({item, index}) => {
+          return( 
+              <View style={styles.listView}>
+                  <Text style={styles.listText}>{`\u2740 ${item.RestaurantName}`}</Text>
+              </View>
+          )
+  }}/>
+);
 }
+
+/*
+Unicode for bullet points:
+  \u2386 - arrow in box
+  \u23e3 - hexagram in hexagram
+  \u235f - star in circle
+  \u25a3 - box in box
+  \u272f - 5 prong star
+  \u2735 - 8 prong star
+  \u274a - 8 prong teardrop asterisk
+  \u273c - 6 prong open-center teardrop asterisk
+  \u2740 - flower
+  \u2741 - flower 2
+*/

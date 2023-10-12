@@ -1,10 +1,22 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, FlatList} from 'react-native';
+import styles from './style-sheet';
+import realm, {addBrand, getAllBrands, deleteAllBrands} from './components/Database';
 
 export default function BrandsScreen({ navigation }){
+    addBrand('Gatorade');
+    addBrand("Lay's");
+
     return(
-        <View style={{flex: 1,justifyContent: 'center', alignItems: 'center'}}>
-            <Text>This is the brands Screen</Text>
-        </View>
-    );
+        <FlatList
+            data={getAllBrands()}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({item, index}) => {
+                return( 
+                    <View style={styles.listView}>
+                        <Text style={styles.listText}>{`\u2740 ${item.BrandName}`}</Text>
+                    </View>
+                )
+        }}/>
+      );
 }
