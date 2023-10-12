@@ -53,14 +53,51 @@ let deleteAllBrands = () => {
     })
 }
 
+class ReviewSchema extends Realm.Object {}
+ReviewSchema.schema = {
+    name: 'Review',
+    properties: {
+        ItemName: 'string',
+        Type: 'string',
+        TypeName: 'string',
+        Rating: 'int',
+        Notes: 'string?'
+    }
+};
+
+let addReview = (_ItemName, _Type, _TypeName, _Rating, _Notes = null) => {
+    realm.write(() => {
+        const review = realm.create('Review', {
+            ItemName: _ItemName,
+            Type: _Type,
+            TypeName: _TypeName,
+            Rating: _Rating,
+            Notes: _Notes
+        });
+    });
+}
+
+let getAllReviews = () => {
+    return realm.objects('Review');
+}
+
+let deleteAllReviews = () => {
+    realm.write(() => {
+        realm.delete(getAllReviews());
+    })
+}
+
 export {addRestaurant,
         getAllRestaurants,
         deleteAllRestaurants,
         addBrand,
         getAllBrands,
-        deleteAllBrands
+        deleteAllBrands,
+        addReview,
+        getAllReviews,
+        deleteAllReviews
     }
 
-let realm = new Realm({schema: [RestaurantSchema, BrandSchema], schemaVersion: 2});
+let realm = new Realm({schema: [RestaurantSchema, BrandSchema, ReviewSchema], schemaVersion: 3});
 
 export default realm;
