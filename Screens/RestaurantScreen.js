@@ -1,9 +1,16 @@
-import React from 'react';
-import {View, Text, FlatList} from 'react-native';
+import React, {useState} from 'react';
+import {Button, View, Text, FlatList} from 'react-native';
 import styles from './style-sheet';
 import realm, {addRestaurant, getAllRestaurants, deleteAllRestaurants} from './components/Database';
 
+
+import { useNavigation } from '@react-navigation/native'; 
+
 export default function RestaurantScreen({ navigation }){
+  const goToDetailScreen = () => {
+    navigation.navigate('Detail'); 
+  };
+
   addRestaurant("Popeye's");
   addRestaurant('Chik-Fil-A');
 
@@ -15,6 +22,12 @@ export default function RestaurantScreen({ navigation }){
           return( 
               <View style={styles.listView}>
                   <Text style={styles.listText}>{`\u2740 ${item.RestaurantName}`}</Text>
+                  <Button title="Details"
+                  onPress = { () => {
+                    navigation.navigate('Detail', {
+                      RestaurantName : item.RestaurantName
+                    })
+                  }} color="grey" />
               </View>
           )
   }}/>

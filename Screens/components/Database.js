@@ -27,6 +27,10 @@ let deleteAllRestaurants = () => {
     })
 }
 
+let getRestaurantByName = ( _RestaurantName) => {
+    return realm.objects('Restaurant').filtered('RestaurantName =${_RestaurantName}');
+}
+
 class BrandSchema extends Realm.Object {}
 BrandSchema.schema = {
     name: 'Brand',
@@ -52,6 +56,7 @@ let deleteAllBrands = () => {
         realm.delete(getAllBrands());
     })
 }
+
 
 class ReviewSchema extends Realm.Object {}
 ReviewSchema.schema = {
@@ -90,6 +95,7 @@ let deleteAllReviews = () => {
 export {addRestaurant,
         getAllRestaurants,
         deleteAllRestaurants,
+        getRestaurantByName,
         addBrand,
         getAllBrands,
         deleteAllBrands,

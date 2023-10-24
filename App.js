@@ -7,6 +7,7 @@ import HomeScreen from './Screens/HomeScreen';
 import AddItemScreen from './Screens/AddItemScreen';
 import BrandsScreen from './Screens/BrandsScreen';
 import RestaurantScreen from './Screens/RestaurantScreen';
+import DetailScreen from './Screens/DetailScreen'; 
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +47,7 @@ function MyStack(){
         headerStyle: {backgroundColor: '#c7e1ff'}
       }}
       />
+      <Stack.Screen name="Detail" component={DetailScreen} /> 
     </Stack.Navigator>
   )
 }
