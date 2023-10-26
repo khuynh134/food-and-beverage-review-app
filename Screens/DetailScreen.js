@@ -7,7 +7,6 @@ import realm, {addBrand, getAllBrands, deleteAllBrands} from './components/Datab
 
 const DetailScreen = ({route}) => {
     
-
     return(
         <View style = {{flex: 1, justifyContent: 'center', alignItems: 'center',}}>
             <Text style = {{flex: 1, fontSize: 20, color: '#8ea0fa', textAlign: 'center',}}>the name of the restaurant </Text>
