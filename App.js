@@ -8,6 +8,7 @@ import AddItemScreen from './Screens/AddItemScreen';
 import BrandsScreen from './Screens/BrandsScreen';
 import RestaurantScreen from './Screens/RestaurantScreen';
 import DisplayItemScreen from './Screens/MockDisplayItemScreen';
+import DetailScreen from './Screens/DetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +51,14 @@ function MyStack(){
       <Stack.Screen
         name="Display Item"
         component={DisplayItemScreen}
+        options={{
+          headerTintColor: 'black',
+          headerStyle: {backgroundColor: "#c7e1ff"}
+        }}>
+      </Stack.Screen>
+      <Stack.Screen
+        name="Detail"
+        component={DetailScreen}
         options={{
           headerTintColor: 'black',
           headerStyle: {backgroundColor: "#c7e1ff"}

@@ -9,9 +9,9 @@ const DetailScreen = ({route}) => {
     
 
     return(
-        <View style = {styles.container}>
-            <Text>the name of the restaurant </Text>
-            <Text style = {styles.title}>{JSON.stringify(route.params.RestaurantName)}</Text>
+        <View style = {{flex: 1, justifyContent: 'center', alignItems: 'center',}}>
+            <Text style = {{flex: 1, fontSize: 20, color: '#8ea0fa', textAlign: 'center',}}>the name of the restaurant </Text>
+            <Text style = {styles.itemTitle}>{JSON.stringify(route.params.RestaurantName)}</Text>
         </View>
     );
 }; 
