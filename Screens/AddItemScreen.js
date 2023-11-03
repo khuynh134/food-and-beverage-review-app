@@ -16,8 +16,8 @@ export default function AddItemScreen({ navigation }){
     const [defaultRating, SetDefault] = useState(starRatings[0])
     const [setMax, SetMaxRating] = useState(starRatings)
 
-    const StarEmpty = require('./assets/Star_Empty.png')
-    const StarFull = require('./assets/star_full.png')
+    const StarEmpty = 'https://github.com/tranhonghan/images/blob/main/star_corner.png?raw=true'
+    const StarFull = 'https://github.com/tranhonghan/images/blob/main/star_filled.png?raw=true'
 
     const RatingBar = () =>{
         return(
@@ -29,7 +29,7 @@ export default function AddItemScreen({ navigation }){
                             key={item}
                             onPress={() => SetDefault(item)}>
                             <Image style={ratingStyle.starStyling}
-                                source={item <= defaultRating ? StarFull : StarEmpty}/>
+                                source={item <= defaultRating ? {uri: StarFull} : {uri: StarEmpty}}/>
                         </TouchableOpacity>
                     )
                 }

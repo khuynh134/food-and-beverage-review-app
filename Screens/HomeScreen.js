@@ -45,12 +45,6 @@ const Home = ({ navigation }) => {
                     title='Add Item'>
                     <Text style={styles.buttonText}>+ Add Item</Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity style={{alignItems: 'center', justifyCenter: 'center' ,alignSelf: 'center', backgroundColor: 'red', width: 80, height: 40}}
-                        onPress={() => {navigation.navigate('Display Item')}}
-                        title='Display Item'>
-                    <Text>Delete soon</Text>
-                </TouchableOpacity>
             </View>
 
     
