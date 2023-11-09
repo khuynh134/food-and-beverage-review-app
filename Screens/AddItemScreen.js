@@ -7,10 +7,28 @@ import { StyleSheet,
     Image } from "react-native";
 import KeyboardAvoidingWrapper from "./components/KeyboardAvoidingView";
 import { SafeAreaView } from "react-native-safe-area-context";
-import realm, { addReview } from "./components/Database";
+import Triangle from "react-native-triangle";
+import realm, { addReview, addBrand, addRestaurant} from "./components/Database";
 
 
 const starRatings = [1,2,3,4,5];
+
+function submission(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes){
+    if(itemName != '' && RestaurantOrBrand != '' && restaurantOrBrandName != ''){
+        addReview(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes)
+        if(RestaurantOrBrand == 'Brand'){
+            //check for brand in Brands
+            //add if not found
+        }
+        else {
+            //check for restaurant in Restaurants
+            //add if not found
+        }
+    }
+    else {
+        console.log("Invalid input")
+    }
+}
 
 export default function AddItemScreen({ navigation }){
 
@@ -23,7 +41,7 @@ export default function AddItemScreen({ navigation }){
     const RatingBar = () =>{
         return(
             <View style={ratingStyle.container}>
-                <View style={{ height: '100%', marginLeft: 50, flexDirection: "row"}}>
+                <View style={ratingStyle.starView}>
                 {
                     setMax.map((item, key) =>
                         <TouchableOpacity activeOpacity={0.7}
@@ -41,81 +59,132 @@ export default function AddItemScreen({ navigation }){
     }
 
     const [itemName, setItemName] = useState('');
-    const parent = '';
-    const [parentName, setParentName] = useState('');
+    const [restaurantOrBrandName, SetRestaurantOrBrandName] = useState('');
     const [notes, setNotes] = useState('');
-    
+
+    const [placeholder, setPlaceholder] = useState("Enter ___________ Name...")
+    const [RestaurantOrBrand, setRestaurantOrBrand] = useState('')
+    const [selectedButton, setSelectedButton] = useState(null);
+    const selectButton = ( option ) => {
+        setRestaurantOrBrand(option)
+        setSelectedButton(option)
+        let placeholder = "Enter " + option + " Name..."
+        setPlaceholder(placeholder)
+
+    }
+
+    const imageIndex = 0;
+    const images = [
+        require('./assets/images/breakfast1.png'),
+        require('./assets/images/breakfast2.png'),
+        require('./assets/images/breakfast3.png'),
+        require('./assets/images/lunch1.png'),
+        require('./assets/images/lunch2.png'),
+        require('./assets/images/lunch3.png'),
+        require('./assets/images/dinner1.png'),
+        require('./assets/images/dinner2.png'),
+        require('./assets/images/dinner3.png'),
+        require('./assets/images/drink1.png'),
+        require('./assets/images/drink2.png'),
+        require('./assets/images/drink3.png'),
+        require('./assets/images/fastfood1.png'),
+        require('./assets/images/fastfood2.png'),
+        require('./assets/images/fastfood3.png'),
+        require('./assets/images/healthy1.png'),
+        require('./assets/images/healthy2.png'),
+        require('./assets/images/healthy3.png'),
+        require('./assets/images/desert1.png'),
+        require('./assets/images/desert2.png'),
+        require('./assets/images/desert3.png'),
+    ]
+
+    const [imgIndex, setImageIndex] = useState(0)
+    const setImgIndex = ( index ) => {
+        let newIndex = index % images.length;
+        if(newIndex > 0 && newIndex < images.length)
+            setImageIndex(newIndex)
+        else if(newIndex < 0)
+            setImageIndex(images.length - 1)
+        else
+            setImageIndex(0)
+    }
+
     return(
         <KeyboardAvoidingWrapper>
-        <SafeAreaView style={styles.container}>
-            <View style={{ display: 'flex', height: 190, width: '95%' }}>
-                <View style={styles.picturePlaceHolder}></View>
-                <View style={styles.NameContainer}>
-                    <Text style={{ width: '90%', fontSize: 25 }}>Name:</Text>
-                    <View style={styles.NameBar}>
-                        <TextInput  style={{ fontSize: 17, marginLeft: 5 }}
-                                    placeholder="Enter Name Here..."
-                                    value={itemName}
-                                    onChangeText={(text) => setItemName(text)}></TextInput>
-                    </View>        
+        <View style={styles.container}>
+
+            <View style={styles.picBackdrop}>
+                <View style={{backgroundColor: 'white', width: 165, height: 165, justifyContent: "center", alignItems: "center"}}>
+                    <Image style={styles.image} source={images[imgIndex]}></Image>
                 </View>
             </View>
 
-            <View style={{ width: '95%', height: 150 }}>
-                <View style={{ height: '50%', width: '100%' }}>
-                    <View style={styles.buttonContainer1}>
-                        <TouchableOpacity style={styles.button}
-                            onPress={() => {parent = 'Restaurant'}}>
-                            <Text style={{fontSize: 24, color: '#FFF' }}>Restaurants</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.buttonContainer2}>
-                        <TouchableOpacity style={styles.button}
-                            onPress={() => {parent = 'Brand'}}>
-                            <Text style={{fontSize: 24, color: '#FFF' }}>Brands</Text>
-                        </TouchableOpacity> 
-                    </View>
-                </View>
-                <View style={{ width: '100%', height: '50%', justifyContent: "center"}}>
-                    <Text style={{width: '40%', fontSize: 22,  position: 'absolute'}}>Restaurants/Brands:</Text>
-                    <View style={styles.restaurantsBrandsBar}>
-                        <TextInput  style={{ fontSize: 16 ,marginLeft: 5, padding: 5}}
-                                    placeholder="Enter Restraurant/Brand..."
-                                    value={parentName}
-                                    onChangeText={(text) => setParentName(text)}></TextInput>
-                    </View>
-                </View>
+            <Text style={styles.selectImage}>Select Image:</Text>
+            <View style={styles.selectImageView}>
+                <TouchableOpacity onPress={() => setImgIndex(imgIndex - 1)}>
+                    <Triangle width={45} height={45} color={'#545F71'} direction={'left'}/>
+                </TouchableOpacity>
+                <Text style={styles.selectImageIndex}>{imgIndex + 1}</Text>
+                <TouchableOpacity onPress={() => setImgIndex(imgIndex + 1)}>
+                    <Triangle width={45} height={45} color={'#545F71'} direction={'right'}/>
+                </TouchableOpacity>
             </View>
 
-            <View style={{ height: 325, width: '95%'}}>
-                <View style={styles.Rating}>
-                    <Text style={{fontSize: 22, position: "absolute"}}>Rating:</Text>
-                    <RatingBar/>
-                    <View style={{ width: '20%', height: '100%', alignSelf: 'flex-end', justifyContent: "center"}}>
-                        <Text style={{fontSize: 22, paddingLeft: 10}}> 
-                        {"   " + defaultRating + '/' + starRatings.length} 
-                        </Text>
-                    </View>
-                </View>
-                <View style={styles.notes}>
-                    <Text style={{fontSize: 22}}>Notes: </Text>
-                    <View style={styles.addNotes}>
-                        <TextInput  style={styles.notesInput} placeholder="Enter notes..." multiline
-                                    value={notes}
-                                    onChangeText={(text) => setNotes(text)}></TextInput>
-                    </View>
-                </View>
-
-
-                <View style={styles.submitContainer}>
-                    <TouchableOpacity   style={styles.submitButton}
-                                        onPress={() => {(itemName == '' || parent == '' || parentName == '') ? console.log("Invalid input") : addReview(itemName, parent, parentName, defaultRating, notes)}}>
-                        <Text style={{fontSize: 22, color: '#FFF'}}>Submit</Text>
-                    </TouchableOpacity>
-                </View>
+            <Text style={styles.itemNameText}>Item Name: </Text>
+            <View style={styles.textBox}>
+                <TextInput  style={styles.textInput} 
+                            placeholder="Enter Item Name..."
+                            onChangeText={(text) => setItemName(text)}
+                            value={itemName}/>
             </View>
 
-        </SafeAreaView>
+            <View style={styles.buttonsContainer}>
+                <TouchableOpacity   style={[styles.buttons,
+                                            selectedButton === "Restaurant" ? styles.selected : styles.unselected]} 
+                                    onPress={() => selectButton('Restaurant')}>
+                    <Text style={styles.buttonText}>Restaurant</Text>
+                </TouchableOpacity>
+                <Text style={styles.orText}>OR</Text>
+                <TouchableOpacity   style={[styles.buttons, 
+                                            selectedButton === "Brands" ? styles.selected : styles.unselected]} 
+                                    onPress={() => selectButton('Brands')}>
+                    <Text style={styles.buttonText}>Brand</Text>
+                </TouchableOpacity>
+            </View>
+
+            <Text style={styles.itemNameText} >{RestaurantOrBrand} Name: </Text>
+            <View style={styles.textBox}>
+                <TextInput  style={styles.textInput} 
+                            placeholder={placeholder}
+                            onChangeText={(text) => SetRestaurantOrBrandName(text)}
+                            value={restaurantOrBrandName}/>
+            </View>
+
+            <View style={styles.ratingContainer}>
+                <Text style={styles.YourRating}>Your Rating:</Text>
+                <RatingBar/>
+            </View>
+
+            <View style={{width: '95%'}}>
+                <Text style={styles.notesText}>Notes: </Text>
+                    <ScrollView style={styles.notesTextBox}>
+                        <TextInput style={styles.textInput}
+                            placeholder="Enter Notes..."
+                            onChangeText={(text) => setNotes(text)}
+                            value={notes}
+                            multiline // This allows multiline input for notes
+                        />
+                    </ScrollView>
+            </View>
+
+            <View style={styles.SubmitContainer}>
+                <TouchableOpacity   style={styles.Submit}
+                                    onPress={() =>  submission(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes)}>
+                    <Text style={styles.SubmitText}>Submit</Text>
+                </TouchableOpacity>
+            </View>    
+            
+        </View>
         </KeyboardAvoidingWrapper>
 
     );
@@ -123,124 +192,147 @@ export default function AddItemScreen({ navigation }){
 
 const styles = StyleSheet.create({
     container: {
+        //backgroundColor: 'red',
         flex: 1,
-        backgroundColor: '#f0fbfa',
+        alignItems: 'center',
+    },
+    picBackdrop: {
+        backgroundColor: '#545F71',
+        width: '100%',
+        height: 185,
+        justifyContent: 'center',
         alignItems: 'center'
     },
-
-    // add image, name, and buttons
-    picturePlaceHolder: {
-        backgroundColor: 'grey',
-        height: 185,
-        width: 185,
-        position: 'absolute'
+    image: {
+        backgroundColor: 'white',
+        width: 155,
+        height: 155,
     },
-    NameContainer: {
-        alignSelf: 'flex-end',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 200,
-        width: '50%',
-        //backgroundColor: 'black'
+    selectImage: {
+        fontSize: 20
     },
-    NameBar: {
-        backgroundColor: '#FFF',
-        width: '95%',
-        height: 45,
-        marginLeft: 10,
-        borderColor: 'black',
-        borderWidth: 1,
-        justifyContent: 'center',
-        paddingRight: 5
-    },
-
-    // Resturant/Brand name buttons and search bar
-    buttonContainer1: {
-        width: '50%',
-        height: '100%', 
-        position: 'absolute',
-        justifyContent: 'center'
-    },
-    buttonContainer2: {
-        width: '50%', 
-        height: '100%', 
-        alignSelf: 'flex-end',
-        justifyContent: 'center',
-    },
-    button: {
-        backgroundColor: '#545f71',
-        height: '90%',
-        width: '90%',
-        position: 'absolute',
-        alignSelf: 'center',
-        borderRadius: 10,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    restaurantsBrandsBar: {
-        backgroundColor: '#fff',
-        width: '60%',
-        height: 45,
-        alignSelf: 'flex-end',
-        borderWidth: 1,
-        borderColor: 'black',
-        paddingRight: 5,
-        justifyContent: "center"
-    },
-
-    // Rating, notes
-    Rating: {
-        width: '100%',
-        height: 40,
-        justifyContent: 'center'
-    },
-    notes: {
-        height: 220,
-        width: '100%'
-    },
-    addNotes: {
-        width: '100%',
-        height: 180,
-        backgroundColor: '#fff',
-        borderColor: 'black',
-        borderWidth: 1
-
-    },
-    notesInput: {
-        fontSize: 17,
-        marginLeft: 5,
-        paddingRight: 5
-    },
-    submitContainer: {
-        //backgroundColor: 'red',
-        width: '100%',
-        height: 65,
+    selectImageView: {
+        flexDirection: 'row',
         justifyContent: "center",
         alignItems: "center"
     },
-    submitButton: {
-        backgroundColor: "#545f71",
-        width: 100,
-        height: 60,
+    selectImageIndex: {
+        backgroundColor: '#D9D9D9',
+        textAlign: "center",
+        fontSize: 24,
+        fontWeight: "bold",
+        margin: 5,
+        paddingHorizontal:12,
+        paddingVertical: 5,
+        borderColor: 'black',
+        borderWidth: 2
+    },
+    itemNameText: {
+        width: '95%',
+        fontSize: 20,
+        fontWeight: "bold"
+    },
+    textBox: {
+        backgroundColor: "white",
+        width: '95%',
+        height: 35,
+        borderColor: '#888888',
+        borderWidth: 2,
+        borderRadius: 5
+    },
+    textInput: {
+        fontSize: 15,
+        paddingHorizontal: 5
+    },
+    buttonsContainer: {
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: 10
+        flexDirection: 'row',
+        width: '95%',
+        marginTop: 10, 
+        marginBottom: 5,
+    },
+    orText: {
+        padding: 10,
+        fontSize: 20,
+        fontWeight: "bold"
+    },
+    buttons: {
+        borderRadius: 5,
+        justifyContent: "center",
+        alignItems: "center",
+        width: 150,
+        height: 50
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: "bold",
+    },
+    unselected: {
+        backgroundColor: '#9CA3AF'
+    },
+    selected: {
+        backgroundColor: '#545F71'
+    },
+    ratingContainer: {
+        //backgroundColor: "red",
+        width: '95%',
+        marginTop: 10,
+        flexDirection: "row",
+    },
+    YourRating: {
+        //backgroundColor: 'red',
+        textAlign: "center",
+        paddingVertical: 4,
+        fontSize: 20,
+        fontWeight: "bold"
+    },
+    notesText: {
+        width: '95%',
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    notesTextBox: {
+        backgroundColor: 'white',
+        borderColor: '#9CA3AF',
+        borderWidth: 2,
+        borderRadius: 5,
+        width: '100%',
+        height: 100
+    },
+    SubmitContainer: {
+        height: 70,
+        width: '95%',
+        justifyContent: "center",
+        alignItems: 'center'
 
+    },
+    Submit: {
+        height: '75%',
+        width: '50%',
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: '#545F71',
+        borderRadius: 5
+    },
+    SubmitText: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold'
     }
 
 })
 
 
 const ratingStyle = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignSelf: 'center',
-        flexDirection: 'row'
-    },
     starStyling: {
         width: 40,
         height: 40,
         resizeMode: 'cover'
+    },
+    starView: {
+        marginLeft: 20,
+        flexDirection: 'row'
     }
 })
