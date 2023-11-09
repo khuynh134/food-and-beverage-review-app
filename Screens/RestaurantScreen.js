@@ -22,10 +22,10 @@ export default function RestaurantScreen({ navigation }){
           return( 
               <View style={styles.listView}>
                   <Text style={styles.listText}>{`\u2740 ${item.RestaurantName}`}</Text>
-                  <Button title="Details"
+                  <Button title="Reviews"
                   onPress = { () => {
                     navigation.navigate('Detail', {
-                      RestaurantName : item.RestaurantName
+                      EntityName : item.RestaurantName
                     })
                   }} color="grey" />
               </View>
