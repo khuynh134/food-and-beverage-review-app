@@ -4,7 +4,8 @@ import { StyleSheet,
     Text, 
     TouchableOpacity,
     TextInput,
-    Image } from "react-native";
+    Image,
+    ScrollView } from "react-native";
 import KeyboardAvoidingWrapper from "./components/KeyboardAvoidingView";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Triangle from "react-native-triangle";
