@@ -66,18 +66,20 @@ ReviewSchema.schema = {
         Type: 'string',
         TypeName: 'string',
         Rating: 'int',
-        Notes: 'string?'
+        Notes: 'string?',
+        ImageIndex: 'int'
     }
 };
 
-let addReview = (_ItemName, _Type, _TypeName, _Rating, _Notes = null) => {
+let addReview = (_ItemName, _Type, _TypeName, _Rating, _Notes = null, _ImageIndex) => {
     realm.write(() => {
         const review = realm.create('Review', {
             ItemName: _ItemName,
             Type: _Type,
             TypeName: _TypeName,
             Rating: _Rating,
-            Notes: _Notes
+            Notes: _Notes,
+            ImageIndex: _ImageIndex
         });
     });
 }
@@ -104,6 +106,6 @@ export {addRestaurant,
         deleteAllReviews
     }
 
-let realm = new Realm({schema: [RestaurantSchema, BrandSchema, ReviewSchema], schemaVersion: 3});
+let realm = new Realm({schema: [RestaurantSchema, BrandSchema, ReviewSchema], schemaVersion: 4});
 
 export default realm;

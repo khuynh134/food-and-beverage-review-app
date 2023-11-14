@@ -9,14 +9,13 @@ import { StyleSheet,
 import KeyboardAvoidingWrapper from "./components/KeyboardAvoidingView";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Triangle from "react-native-triangle";
-import realm, { addReview, addBrand, addRestaurant} from "./components/Database";
-
+import realm, { addReview, addBrand, addRestaurant, deleteAllReviews} from "./components/Database";
 
 const starRatings = [1,2,3,4,5];
 
-function submission(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes){
+function submission(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex){
     if(itemName != '' && RestaurantOrBrand != '' && restaurantOrBrandName != ''){
-        addReview(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes)
+        addReview(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex)
         if(RestaurantOrBrand == 'Brand'){
             //check for brand in Brands
             //add if not found
@@ -180,7 +179,7 @@ export default function AddItemScreen({ navigation }){
 
             <View style={styles.SubmitContainer}>
                 <TouchableOpacity   style={styles.Submit}
-                                    onPress={() =>  submission(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes)}>
+                                    onPress={() =>  submission(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex)}>
                     <Text style={styles.SubmitText}>Submit</Text>
                 </TouchableOpacity>
             </View>    
