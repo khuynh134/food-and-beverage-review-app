@@ -13,7 +13,7 @@ import realm, { addReview, addBrand, addRestaurant, deleteAllReviews} from "./co
 
 const starRatings = [1,2,3,4,5];
 
-function submission(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex){
+function submission(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex, navigation){
     if(itemName != '' && RestaurantOrBrand != '' && restaurantOrBrandName != ''){
         addReview(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex)
         if(RestaurantOrBrand == 'Brand'){
@@ -24,6 +24,11 @@ function submission(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultR
             //check for restaurant in Restaurants
             //add if not found
         }
+        //see if you can reset to default values
+        navigation.navigate('Display Review', {
+            EntityName : restaurantOrBrandName,
+            Item: itemName
+          })
     }
     else {
         alert("Missing inputs detected!")
@@ -179,7 +184,7 @@ export default function AddItemScreen({ navigation }){
 
             <View style={styles.SubmitContainer}>
                 <TouchableOpacity   style={styles.Submit}
-                                    onPress={() =>  submission(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex)}>
+                                    onPress={() =>  submission(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex, navigation)}>
                     <Text style={styles.SubmitText}>Submit</Text>
                 </TouchableOpacity>
             </View>    
