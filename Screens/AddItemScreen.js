@@ -26,7 +26,7 @@ function submission(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultR
         }
     }
     else {
-        console.log("Invalid input")
+        alert("Missing inputs detected!")
     }
 }
 
