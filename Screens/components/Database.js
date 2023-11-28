@@ -88,6 +88,14 @@ let getAllReviews = () => {
     return realm.objects('Review');
 }
 
+let getReviewsByTypeName = (_TypeName) => {
+    return realm.objects('Review').filtered('TypeName LIKE[c] $0', _TypeName);
+}
+
+let getReviewsByTypeNameAndItemName = (_TypeName, _ItemName) => {
+    return realm.objects('Review').filtered('TypeName LIKE[c] $0 && ItemName LIKE[c] $1', _TypeName, _ItemName);
+}
+
 let deleteAllReviews = () => {
     realm.write(() => {
         realm.delete(getAllReviews());
@@ -103,6 +111,8 @@ export {addRestaurant,
         deleteAllBrands,
         addReview,
         getAllReviews,
+        getReviewsByTypeName,
+        getReviewsByTypeNameAndItemName,
         deleteAllReviews
     }
 
