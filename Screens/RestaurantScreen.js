@@ -3,17 +3,7 @@ import {Button, View, Text, FlatList} from 'react-native';
 import styles from './style-sheet';
 import realm, {addRestaurant, getAllRestaurants, deleteAllRestaurants} from './components/Database';
 
-
-import { useNavigation } from '@react-navigation/native'; 
-
 export default function RestaurantScreen({ navigation }){
-  const goToDetailScreen = () => {
-    navigation.navigate('Detail'); 
-  };
-
-  addRestaurant("Popeye's");
-  addRestaurant('Chik-Fil-A');
-
   return(
   <FlatList
       data={getAllRestaurants()}
