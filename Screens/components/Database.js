@@ -31,6 +31,12 @@ let getRestaurantByName = ( _RestaurantName) => {
     return realm.objects('Restaurant').filtered('RestaurantName =${_RestaurantName}');
 }
 
+let deleteRestaurant = (_RestaurantName) => {
+    realm.write(() => {
+        realm.delete(realm.objects('Restaurant').filtered('RestaurantName LIKE[c] $0', _RestaurantName));
+    })
+}
+
 class BrandSchema extends Realm.Object {}
 BrandSchema.schema = {
     name: 'Brand',
@@ -54,6 +60,12 @@ let getAllBrands = () => {
 let deleteAllBrands = () => {
     realm.write(() => {
         realm.delete(getAllBrands());
+    })
+}
+
+let deleteBrand = (_BrandName) => {
+    realm.write(() => {
+        realm.delete(realm.objects('Brand').filtered('BrandName LIKE[c] $0', _BrandName));
     })
 }
 
@@ -102,18 +114,27 @@ let deleteAllReviews = () => {
     })
 }
 
+let deleteReview = (_TypeName, _ItemName) => {
+    realm.write(() => {
+        realm.delete(realm.objects('Review').filtered('TypeName LIKE[c] $0 && ItemName LIKE[c] $1', _TypeName, _ItemName));
+    })
+}
+
 export {addRestaurant,
         getAllRestaurants,
         deleteAllRestaurants,
         getRestaurantByName,
+        deleteRestaurant,
         addBrand,
         getAllBrands,
         deleteAllBrands,
+        deleteBrand,
         addReview,
         getAllReviews,
         getReviewsByTypeName,
         getReviewsByTypeNameAndItemName,
-        deleteAllReviews
+        deleteAllReviews,
+        deleteReview
     }
 
 let realm = new Realm({schema: [RestaurantSchema, BrandSchema, ReviewSchema], schemaVersion: 4});
