@@ -68,7 +68,7 @@ const DetailScreen = ({route, navigation}) => {
 
     return(
         <FlatList
-            ListHeaderComponent={ <Text style={styles2.cardText}>{entityName}</Text>}
+            ListHeaderComponent={ <Text style={styles2.entityNameHeader}>{entityName}</Text>}
             data={getReviewsByTypeName(entityName)}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item, index}) => {
@@ -97,6 +97,14 @@ const DetailScreen = ({route, navigation}) => {
 }; 
 
 const styles2 = StyleSheet.create({
+    entityNameHeader:{
+        fontSize: 25,
+        color: '#545f71',
+        width: Dimensions.get('window').width - 125,
+        position: 'relative',
+        top: 5,
+        left: 5,
+    },
     cardView:{
         borderWidth: 3,
         borderColor: '#63d4c0',
@@ -162,9 +170,14 @@ const styles2 = StyleSheet.create({
         left: 5,
     },
     displayReviewButton: {
-        backgroundColor: 'gray',
+        backgroundColor: '#545f71',
         width: '20%',
-        height: 30,
+        fontSize: 14,
+        alignItems: 'center',
+        paddingVertical: 4,
+        borderRadius: 5,
+        borderWidth: 2,
+        borderColor: '#424b59',
         position: 'relative',
         top: 90,
         left: 5,
