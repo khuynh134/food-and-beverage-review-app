@@ -55,7 +55,6 @@ const SearchBarWithSuggestions = () => {
                     Item: item.ItemName
                   }); // Pass data to the 'Display Review' screen
                   }} 
-                 
                   >
                   <Text>{item && item.TypeName} - {item && item.ItemName} </Text>
               </TouchableOpacity>
