@@ -116,6 +116,6 @@ export {addRestaurant,
         deleteAllReviews
     }
 
-let realm = new Realm({schema: [RestaurantSchema, BrandSchema, ReviewSchema], schemaVersion: 4});
+let realm = new Realm({schema: [RestaurantSchema, BrandSchema, ReviewSchema], schemaVersion: 7});
 
 export default realm;
