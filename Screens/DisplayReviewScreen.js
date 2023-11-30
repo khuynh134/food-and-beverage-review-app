@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRoute } from '@react-navigation/native';
-import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, Image, ScrollView, TouchableOpacity} from 'react-native';
 import realm, {getReviewsByTypeNameAndItemName} from './components/Database';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -79,12 +79,21 @@ export default function DisplayReviewScreen({ route }){
                 <View style={styles.displayRatings}>
                     <CurrentRating/>
                 </View>
-
+                
                 <View style={{flex: 1, marginBottom: 12, justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{fontSize: 20, fontWeight: 'bold'}}>- Notes -</Text>
                     <View style={styles.notes}>
                         <Text style={{fontSize: 16, paddingTop:3, paddingBottom: 10, paddingHorizontal: 7}}>{review.Notes}</Text>
                     </View>
+                </View>
+
+                <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                    <TouchableOpacity style={styles.EditDeleteButtons}>
+                        <Text style={{fontSize: 30, color: "white"}}>Edit</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.EditDeleteButtons}>
+                        <Text style={{fontSize: 30, color: "white"}}>Delete</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
           </ScrollView>
@@ -148,5 +157,15 @@ const styles = StyleSheet.create({
         width: '100%',
         borderWidth: 3,
         borderColor: 'black',
+    },
+    EditDeleteButtons: {
+        backgroundColor: '#545f71',
+        width: '35%',
+        alignItems: 'center',
+        paddingVertical: 5,
+        margin: 15,
+        borderRadius: 5,
+        borderWidth: 2,
+        borderColor: '#424b59',
     }
 })
