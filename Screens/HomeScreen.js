@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './assets/FABRAlogo.png';
 import styles from './style-sheet';
 import SearchBar from './components/SearchBar';
+import SearchBarWithSuggestions from './components/SearchBarWithSuggestions'; 
 import KeyboardAvoidingWrapper from './components/KeyboardAvoidingView';
 import {
   StyleSheet,
@@ -17,7 +18,7 @@ import {
 
 
 const Home = ({ navigation }) => {
-    const [text, onChangeText] = React.useState('Search');
+    
     console.log(logo);
     return (
         <KeyboardAvoidingWrapper>
@@ -27,7 +28,7 @@ const Home = ({ navigation }) => {
             <Image source={logo} style={styles.logostyle} />
         
             <View style={styles.temp}>
-                <SearchBar/>
+                <SearchBarWithSuggestions/>
                 <TouchableOpacity style={styles.buttonContainer}
                     onPress={() => {navigation.navigate('Restaurants')}}
                     title='Restaurants'>
