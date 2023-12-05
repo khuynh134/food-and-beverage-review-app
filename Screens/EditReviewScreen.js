@@ -1,47 +1,76 @@
 import React, {useState} from "react";
-import {  
+import {
     View, 
     Text, 
     TouchableOpacity,
     TextInput,
     Image,
     ScrollView } from "react-native";
+import { useRoute, CommonActions } from '@react-navigation/native';
 import KeyboardAvoidingWrapper from "./components/KeyboardAvoidingView";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Triangle from "react-native-triangle";
 import {AddEditReviewStyles, ratingStyle} from './components/style-sheet';
-import realm, { addReview, addBrand, addRestaurant, numberOfBrandsByName, numberOfRestaurantsByName} from "./components/Database";
+import realm, { addReview, deleteReview, getReviewsByTypeNameAndItemName, numberOfReviewsByTypeName, addBrand, deleteBrand, numberOfBrandsByName, addRestaurant, numberOfRestaurantsByName, deleteRestaurant} from "./components/Database";
 
 const starRatings = [1,2,3,4,5];
 
-function submission(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex, navigation){
+function submission(review, itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex, navigation){
     if(itemName != '' && RestaurantOrBrand != '' && restaurantOrBrandName != ''){
+        //delete old Brand/Restaurant if needed
+        if(review.Type == 'Brand'){
+            //check if any more reviews for that Brand
+            if(numberOfReviewsByTypeName(review.TypeName, review.Type) == 1) {
+                deleteBrand(review.TypeName) //delete if none
+        }}
+        else { //if review.Type != 'Brand' ( == 'Restaurant')
+            //check if any more reviews for that Restaurant
+            if(numberOfReviewsByTypeName(review.TypeName, review.Type) == 1) {
+                deleteRestaurant(review.TypeName) //delete if none
+        }}
+
+        deleteReview(review.Type, review.TypeName, review.ItemName)
+
         addReview(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex)
+        
         //add new Brand/Restaurant if needed
         if(RestaurantOrBrand == 'Brand'){
             //check if brand already in Brands
             if(numberOfBrandsByName(restaurantOrBrandName) == 0) {
                 addBrand(restaurantOrBrandName) //add if not found
         }}
-        else if(RestaurantOrBrand == 'Restaurant'){
+        else {
             //check if restaurant already in Restaurants
             if(numberOfRestaurantsByName(restaurantOrBrandName) == 0) {
                 addRestaurant(restaurantOrBrandName) //add if not found
         }}
-        //see if you can reset to default values
-        navigation.navigate('Display Review', {
-            EntityName : restaurantOrBrandName,
-            Item: itemName
-          })
+
+        //navigate out of page to home then displayreview
+        navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [
+                { name: 'Home' },
+                { name: 'Display Review',
+                  params: { EntityName: restaurantOrBrandName, Item: itemName },
+                },
+              ],
+            })
+          );
     }
     else {
         alert("Missing inputs detected!")
     }
 }
 
-export default function AddItemScreen({ navigation }){
+export default function EditReviewScreen({ route, navigation }){
 
-    const [defaultRating, SetDefault] = useState(starRatings[0])
+    const entityName = route.params.EntityName.toString();
+    const item = route.params.Item.toString();
+
+    const review = getReviewsByTypeNameAndItemName(entityName, item)[0];
+
+    const [defaultRating, SetDefault] = useState(starRatings[review.Rating - 1])
     const [setMax, SetMaxRating] = useState(starRatings)
 
     const StarEmpty = require('./assets/Star_Empty.png')
@@ -67,13 +96,13 @@ export default function AddItemScreen({ navigation }){
         );
     }
 
-    const [itemName, setItemName] = useState('');
-    const [restaurantOrBrandName, SetRestaurantOrBrandName] = useState('');
-    const [notes, setNotes] = useState('');
+    const [itemName, setItemName] = useState(review.ItemName);
+    const [restaurantOrBrandName, SetRestaurantOrBrandName] = useState(review.TypeName);
+    const [notes, setNotes] = useState(review.Notes);
 
     const [placeholder, setPlaceholder] = useState("Enter ___________ Name...")
-    const [RestaurantOrBrand, setRestaurantOrBrand] = useState('')
-    const [selectedButton, setSelectedButton] = useState(null);
+    const [RestaurantOrBrand, setRestaurantOrBrand] = useState(review.Type)
+    const [selectedButton, setSelectedButton] = useState(review.Type);
     const selectButton = ( option ) => {
         setRestaurantOrBrand(option)
         setSelectedButton(option)
@@ -82,7 +111,6 @@ export default function AddItemScreen({ navigation }){
 
     }
 
-    const imageIndex = 0;
     const images = [
         require('./assets/images/breakfast1.png'),
         require('./assets/images/breakfast2.png'),
@@ -107,7 +135,7 @@ export default function AddItemScreen({ navigation }){
         require('./assets/images/desert3.png'),
     ]
 
-    const [imgIndex, setImageIndex] = useState(0)
+    const [imgIndex, setImageIndex] = useState(review.ImageIndex)
     const setImgIndex = ( index ) => {
         let newIndex = index % images.length;
         if(newIndex > 0 && newIndex < images.length)
@@ -188,7 +216,7 @@ export default function AddItemScreen({ navigation }){
 
             <View style={AddEditReviewStyles.SubmitContainer}>
                 <TouchableOpacity   style={AddEditReviewStyles.Submit}
-                                    onPress={() =>  submission(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex, navigation)}>
+                                    onPress={() =>  submission(review, itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex, navigation)}>
                     <Text style={AddEditReviewStyles.SubmitText}>Submit</Text>
                 </TouchableOpacity>
             </View>    

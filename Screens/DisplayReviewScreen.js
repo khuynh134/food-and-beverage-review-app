@@ -1,10 +1,28 @@
 import React, { useState } from 'react';
-import { useRoute } from '@react-navigation/native';
-import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
-import realm, {getReviewsByTypeNameAndItemName} from './components/Database';
+import { useRoute, StackActions } from '@react-navigation/native';
+import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
+import { displayReviewStyles } from './components/style-sheet';
+import realm, {getReviewsByTypeNameAndItemName, numberOfReviewsByTypeName, deleteReview, deleteBrand, deleteRestaurant} from './components/Database';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function DisplayReviewScreen({ route }){
+function deleteThisReview(review, navigation) {
+    if(review.Type == 'Brand'){
+        //check if any more reviews for that Brand
+        if(numberOfReviewsByTypeName(review.TypeName, review.Type) == 1) {
+            deleteBrand(review.TypeName) //delete if none
+    }}
+    else { //if review.Type != 'Brand' ( == 'Restaurant')
+        //check if any more reviews for that Restaurant
+        if(numberOfReviewsByTypeName(review.TypeName, review.Type) == 1) {
+            deleteRestaurant(review.TypeName) //delete if none
+    }}
+
+    deleteReview(review.Type, review.TypeName, review.ItemName)
+
+    navigation.dispatch(StackActions.popToTop()); //go back to home
+}
+
+export default function DisplayReviewScreen({ route, navigation }){
 
     const entityName = route.params.EntityName.toString();
     const item = route.params.Item.toString();
@@ -48,22 +66,22 @@ export default function DisplayReviewScreen({ route }){
             <View style={{flexDirection: 'row'}}>
                 {
                     setMax.map((item, key) =>   
-                        <Image style={styles.stars}
+                        <Image style={displayReviewStyles.stars}
                             key={key.toString()}
                             source={item <= review.Rating ? StarFull : StarEmpty}/>
                     )
                 }
-                <View style={[styles.ratingsBox, { backgroundColor }]}>
-                    <Text style={styles.ratingNum}>{review.Rating}</Text>
+                <View style={[displayReviewStyles.ratingsBox, { backgroundColor }]}>
+                    <Text style={displayReviewStyles.ratingNum}>{review.Rating}</Text>
                 </View>
             </View>
         );
     }
 
     return(
-        <SafeAreaView style={styles.Container}>
-          <ScrollView style={styles.scrollView}>
-            <View style={styles.pictureBackDrop}>
+        <SafeAreaView style={displayReviewStyles.Container}>
+          <ScrollView style={displayReviewStyles.scrollView}>
+            <View style={displayReviewStyles.pictureBackDrop}>
                 <View style={{backgroundColor: 'white', width: 250, height: 250, justifyContent: 'center', alignItems: 'center'}}>
                     <Image style={{height: 240, width: 240}} source={images[review.ImageIndex]}></Image>
                 </View>
@@ -72,19 +90,37 @@ export default function DisplayReviewScreen({ route }){
             <View style={{width: '95%', flex: 1, paddingTop: 10}}>
                 <Text style={{fontSize: 35, fontWeight: 'bold', }}>{review.ItemName}</Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Image source={require('./assets/spoonfork.png')} style={styles.spoonfork}></Image>
+                    <Image source={require('./assets/spoonfork.png')} style={displayReviewStyles.spoonfork}></Image>
                     <Text style={{fontSize: 20, paddingLeft: 5}}>{review.TypeName}</Text>    
                 </View>
 
-                <View style={styles.displayRatings}>
+                <View style={displayReviewStyles.displayRatings}>
                     <CurrentRating/>
                 </View>
-
+                
                 <View style={{flex: 1, marginBottom: 12, justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{fontSize: 20, fontWeight: 'bold'}}>- Notes -</Text>
-                    <View style={styles.notes}>
+                    <View style={displayReviewStyles.notes}>
                         <Text style={{fontSize: 16, paddingTop:3, paddingBottom: 10, paddingHorizontal: 7}}>{review.Notes}</Text>
                     </View>
+                </View>
+
+                <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                    <TouchableOpacity style={displayReviewStyles.EditDeleteButtons}
+                        onPress={() => {
+                            navigation.navigate('Edit Review', {
+                              EntityName : review.TypeName,
+                              Item: review.ItemName
+                            })
+                    }}>
+                        <Text style={{fontSize: 30, color: "white"}}>Edit</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={displayReviewStyles.EditDeleteButtons}
+                        onPress={() => { deleteThisReview(review, navigation)
+                    }}>
+                        <Text style={{fontSize: 30, color: "white"}}>Delete</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
           </ScrollView>
@@ -92,61 +128,3 @@ export default function DisplayReviewScreen({ route }){
     );
 }
 
-const styles = StyleSheet.create({
-    Container: {
-        flex: 1,
-        alignItems: 'center',
-    },
-    scrollView: {
-
-        backgroundColor: '#f0fbfa',
-    },
-    pictureBackDrop: {
-        width: '100%', 
-        height: 275, 
-        backgroundColor: '#545F71', 
-        justifyContent: 'center', 
-        alignItems: 'center'
-    },
-    spoonfork: {
-        width: 20,
-        height: 20
-    },
-
-    displayRatings: {
-        width: '100%',
-        height: 80,
-        justifyContent: 'center',
-    },
-    stars: {
-        width: 60,
-        height: 60
-    },
-    ratingsBox: {
-        height: 55,
-        width: 55,
-        alignSelf: 'center',
-        marginLeft: 12,
-        borderWidth: 2,
-        borderColor: 'black',
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: 'black', 
-        shadowOffset: { width: 0, height: 2 }, 
-        shadowOpacity: 1, 
-        shadowRadius: 2, 
-        elevation: 20
-    },
-    ratingNum: {
-        fontSize: 35,
-        fontWeight: 'bold',
-    },
-
-    notes: {
-        backgroundColor: 'white',
-        width: '100%',
-        borderWidth: 3,
-        borderColor: 'black',
-    }
-})

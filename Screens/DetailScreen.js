@@ -1,13 +1,14 @@
 
 import React, { useState } from 'react'; 
-import { StyleSheet, Text, View, FlatList, Image, Dimensions, TouchableOpacity} from 'react-native'; 
+import { Text, View, FlatList, Image, TouchableOpacity} from 'react-native'; 
 import { useRoute } from '@react-navigation/native'; 
-import styles from './style-sheet';
-import realm, {getReviewsByTypeName, deleteAllReviews, getAllReviews} from './components/Database';
+import {reviewListStyles} from './components/style-sheet';
+import realm, {getReviewsByTypeName} from './components/Database';
 
 const DetailScreen = ({route, navigation}) => {
     
     const entityName = route.params.EntityName.toString();
+    const entity = route.params.Entity.toString();
 
     const StarEmpty = require('./assets/Star_Empty.png')
     const StarFull = require('./assets/star_full.png')
@@ -23,13 +24,13 @@ const DetailScreen = ({route, navigation}) => {
             <View style={{flexDirection: 'row'}}>
                 {
                     setMax.map((item, key) =>   
-                        <Image style={styles2.stars}
+                        <Image style={reviewListStyles.stars}
                             key={key.toString()}
                             source={item <= rating ? StarFull : StarEmpty}/>
                     )
                 }
-                <View style={[styles2.ratingsBox, { backgroundColor }]}>
-                    <Text style={styles2.ratingNum}>{rating}</Text>
+                <View style={[reviewListStyles.ratingsBox, { backgroundColor }]}>
+                    <Text style={reviewListStyles.ratingNum}>{rating}</Text>
                 </View>
             </View>
         );
@@ -37,11 +38,10 @@ const DetailScreen = ({route, navigation}) => {
 
     const ReviewImage = ({index}) =>{
         return(
-            <Image style={styles2.image} source={images[index]}></Image> 
+            <Image style={reviewListStyles.image} source={images[index]}></Image> 
         )
     }
 
-    const [imgIndex, setImageIndex] = useState(0)
     const images = [
         require('./assets/images/breakfast1.png'),
         require('./assets/images/breakfast2.png'),
@@ -68,14 +68,14 @@ const DetailScreen = ({route, navigation}) => {
 
     return(
         <FlatList
-            ListHeaderComponent={ <Text style={styles2.entityNameHeader}>{entityName}</Text>}
-            data={getReviewsByTypeName(entityName)}
+            ListHeaderComponent={ <Text style={reviewListStyles.entityNameHeader}>{entityName}</Text>}
+            data={getReviewsByTypeName(entityName, entity)}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item, index}) => {
                 return( 
-                    <View style={styles2.cardView}>
+                    <View style={reviewListStyles.cardView}>
                         <ReviewImage index={item.ImageIndex}/>
-                        <TouchableOpacity style={styles2.displayReviewButton}
+                        <TouchableOpacity style={reviewListStyles.displayReviewButton}
                             title='Display Review'
                             onPress={() => {
                                 navigation.navigate('Display Review', {
@@ -85,104 +85,16 @@ const DetailScreen = ({route, navigation}) => {
                             }}>
                             <Text style={{fontSize: 12, color: "white"}}>Display{'\n'}Review</Text>
                         </TouchableOpacity>
-                        <Text style={styles2.cardText}>{item.ItemName}</Text>
-                        <View style={styles2.displayRatings}>
+                        <Text style={reviewListStyles.cardText}>{item.ItemName}</Text>
+                        <View style={reviewListStyles.displayRatings}>
                             <CurrentRating rating={item.Rating}/>
                         </View>
-                        <Text style={styles2.cardNotes}>{item.Notes}</Text>
+                        <Text style={reviewListStyles.cardNotes}>{item.Notes}</Text>
                     </View>
                 )
         }}/>
       );
 }; 
-
-const styles2 = StyleSheet.create({
-    entityNameHeader:{
-        fontSize: 25,
-        color: '#545f71',
-        width: Dimensions.get('window').width - 125,
-        position: 'relative',
-        top: 5,
-        left: 5,
-    },
-    cardView:{
-        borderWidth: 3,
-        borderColor: '#63d4c0',
-        borderRadius: 6,
-        margin: 5,
-        backgroundColor: '#e0f6f2',
-        padding: 5,
-    },
-    cardText:{
-        fontSize: 25,
-        color: '#545f71',
-        width: Dimensions.get('window').width - 125,
-        position: 'relative',
-        top: -35,
-        left: 95,
-    },
-    cardNotes:{
-        fontSize: 12,
-        color: '#545f71',
-        width: Dimensions.get('window').width - 125,
-        position: 'relative',
-        top: -35,
-        left: 95
-    },
-    displayRatings: {
-        width: '100%',
-        height: 40,
-        justifyContent: 'center',
-        position: 'relative',
-        top: -35,
-        left: 95
-    },
-    stars: {
-        width: 35,
-        height: 35
-    },
-    ratingsBox: {
-        height: 35,
-        width: 35,
-        alignSelf: 'center',
-        marginLeft: 6,
-        borderWidth: 2,
-        borderColor: 'black',
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: 'black', 
-        shadowOffset: { width: 0, height: 2 }, 
-        shadowOpacity: 1, 
-        shadowRadius: 2, 
-        elevation: 10
-    },
-    ratingNum: {
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
-    image: {
-        backgroundColor: 'white',
-        width: 80,
-        height: 80,
-        position: 'absolute',
-        top: 5,
-        left: 5,
-    },
-    displayReviewButton: {
-        backgroundColor: '#545f71',
-        width: '20%',
-        fontSize: 14,
-        alignItems: 'center',
-        paddingVertical: 4,
-        borderRadius: 5,
-        borderWidth: 2,
-        borderColor: '#424b59',
-        position: 'relative',
-        top: 90,
-        left: 5,
-    }
-  });
 
 export default DetailScreen; 
 
