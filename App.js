@@ -7,7 +7,6 @@ import HomeScreen from './Screens/HomeScreen';
 import AddItemScreen from './Screens/AddItemScreen';
 import BrandsScreen from './Screens/BrandsScreen';
 import RestaurantScreen from './Screens/RestaurantScreen';
-import DisplayItemScreen from './Screens/MockDisplayItemScreen';
 import DetailScreen from './Screens/DetailScreen';
 import DisplayReviewScreen from './Screens/DisplayReviewScreen';
 import EditReviewScreen from './Screens/EditReviewScreen';
@@ -32,31 +31,23 @@ function MyStack(){
         },
         headerTintColor: 'black',
         headerStyle: {backgroundColor: '#c7e1ff'}
-      }}
-      />
+      }}>
+      </Stack.Screen>
       <Stack.Screen
       name="Brands"
       component={BrandsScreen}
       options={{
         headerTintColor: 'black',
         headerStyle: {backgroundColor: '#c7e1ff'}
-      }}
-      />
+      }}>
+      </Stack.Screen>
       <Stack.Screen
       name="Add Item"
       component={AddItemScreen}
       options={{
         headerTintColor: 'black',
         headerStyle: {backgroundColor: '#c7e1ff'}
-      }}
-      />
-      <Stack.Screen
-        name="Display Item"
-        component={DisplayItemScreen}
-        options={{
-          headerTintColor: 'black',
-          headerStyle: {backgroundColor: "#c7e1ff"}
-        }}>
+      }}>
       </Stack.Screen>
       <Stack.Screen
         name="Detail"
