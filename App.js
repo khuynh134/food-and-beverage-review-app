@@ -10,6 +10,7 @@ import RestaurantScreen from './Screens/RestaurantScreen';
 import DisplayItemScreen from './Screens/MockDisplayItemScreen';
 import DetailScreen from './Screens/DetailScreen';
 import DisplayReviewScreen from './Screens/DisplayReviewScreen';
+import EditReviewScreen from './Screens/EditReviewScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -71,6 +72,14 @@ function MyStack(){
         options={{
           headerTintColor: 'black',
           headerStyle: {backgroundColor: "#c7e1ff"}
+        }}>
+      </Stack.Screen>
+      <Stack.Screen
+        name="Edit Review"
+        component={EditReviewScreen}
+        options={{
+          headerTintColor: 'black',
+          headerStyle: {backgroundColor: '#c7e1ff'}
         }}>
       </Stack.Screen>
     </Stack.Navigator>
