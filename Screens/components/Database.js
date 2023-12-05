@@ -31,6 +31,10 @@ let getRestaurantByName = ( _RestaurantName) => {
     return realm.objects('Restaurant').filtered('RestaurantName =${_RestaurantName}');
 }
 
+let numberOfRestaurantsByName = (_RestaurantName) => {
+    return realm.objects('Restaurant').filtered('RestaurantName LIKE[c] $0', _RestaurantName).length;
+}
+
 let deleteRestaurant = (_RestaurantName) => {
     realm.write(() => {
         realm.delete(realm.objects('Restaurant').filtered('RestaurantName LIKE[c] $0', _RestaurantName));
@@ -55,6 +59,10 @@ let addBrand = (_BrandName) => {
 
 let getAllBrands = () => {
     return realm.objects('Brand');
+}
+
+let numberOfBrandsByName = (_BrandName) => {
+    return realm.objects('Brand').filtered('BrandName LIKE[c] $0', _BrandName).length;
 }
 
 let deleteAllBrands = () => {
@@ -104,6 +112,10 @@ let getReviewsByTypeName = (_TypeName) => {
     return realm.objects('Review').filtered('TypeName LIKE[c] $0', _TypeName);
 }
 
+let numberOfReviewsByTypeName = (_TypeName, _Type) => {
+    return realm.objects('Review').filtered('TypeName LIKE[c] $0 && Type LIKE[c] $1', _TypeName, _Type).length;
+}
+
 let getReviewsByTypeNameAndItemName = (_TypeName, _ItemName) => {
     return realm.objects('Review').filtered('TypeName LIKE[c] $0 && ItemName LIKE[c] $1', _TypeName, _ItemName);
 }
@@ -114,9 +126,9 @@ let deleteAllReviews = () => {
     })
 }
 
-let deleteReview = (_TypeName, _ItemName) => {
+let deleteReview = (_Type, _TypeName, _ItemName) => {
     realm.write(() => {
-        realm.delete(realm.objects('Review').filtered('TypeName LIKE[c] $0 && ItemName LIKE[c] $1', _TypeName, _ItemName));
+        realm.delete(realm.objects('Review').filtered('Type LIKE[c] $0 && TypeName LIKE[c] $1 && ItemName LIKE[c] $2', _Type, _TypeName, _ItemName));
     })
 }
 
@@ -124,14 +136,17 @@ export {addRestaurant,
         getAllRestaurants,
         deleteAllRestaurants,
         getRestaurantByName,
+        numberOfRestaurantsByName,
         deleteRestaurant,
         addBrand,
         getAllBrands,
+        numberOfBrandsByName,
         deleteAllBrands,
         deleteBrand,
         addReview,
         getAllReviews,
         getReviewsByTypeName,
+        numberOfReviewsByTypeName,
         getReviewsByTypeNameAndItemName,
         deleteAllReviews,
         deleteReview
