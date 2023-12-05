@@ -108,8 +108,8 @@ let getAllReviews = () => {
     return realm.objects('Review');
 }
 
-let getReviewsByTypeName = (_TypeName) => {
-    return realm.objects('Review').filtered('TypeName LIKE[c] $0', _TypeName);
+let getReviewsByTypeName = (_TypeName, _Type) => {
+    return realm.objects('Review').filtered('TypeName LIKE[c] $0&& Type LIKE[c] $1', _TypeName, _Type);
 }
 
 let numberOfReviewsByTypeName = (_TypeName, _Type) => {

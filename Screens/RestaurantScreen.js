@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, View, Text, FlatList} from 'react-native';
 import styles from './style-sheet';
-import realm, {addRestaurant, getAllRestaurants, deleteAllRestaurants} from './components/Database';
+import realm, {addRestaurant, getAllRestaurants, deleteRestaurant} from './components/Database';
 
 export default function RestaurantScreen({ navigation }){
   return(
@@ -15,7 +15,8 @@ export default function RestaurantScreen({ navigation }){
                   <Button title="Reviews"
                   onPress = { () => {
                     navigation.navigate('Detail', {
-                      EntityName : item.RestaurantName
+                      EntityName : item.RestaurantName,
+                      Entity: 'Restaurant'
                     })
                   }} color="grey" />
               </View>

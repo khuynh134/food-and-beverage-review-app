@@ -15,7 +15,8 @@ export default function BrandsScreen({ navigation }){
                         <Button title="Reviews"
                           onPress = { () => {
                             navigation.navigate('Detail', {
-                              EntityName : item.BrandName
+                              EntityName : item.BrandName,
+                              Entity: 'Brand'
                     })
                   }} color="grey" />
                     </View>

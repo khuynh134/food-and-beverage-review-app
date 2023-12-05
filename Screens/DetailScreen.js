@@ -8,6 +8,7 @@ import realm, {getReviewsByTypeName, deleteAllReviews, getAllReviews} from './co
 const DetailScreen = ({route, navigation}) => {
     
     const entityName = route.params.EntityName.toString();
+    const entity = route.params.Entity.toString();
 
     const StarEmpty = require('./assets/Star_Empty.png')
     const StarFull = require('./assets/star_full.png')
@@ -69,7 +70,7 @@ const DetailScreen = ({route, navigation}) => {
     return(
         <FlatList
             ListHeaderComponent={ <Text style={styles2.entityNameHeader}>{entityName}</Text>}
-            data={getReviewsByTypeName(entityName)}
+            data={getReviewsByTypeName(entityName, entity)}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item, index}) => {
                 return( 
