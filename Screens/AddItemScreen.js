@@ -10,29 +10,41 @@ import KeyboardAvoidingWrapper from "./components/KeyboardAvoidingView";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Triangle from "react-native-triangle";
 import {AddEditReviewStyles, ratingStyle} from './components/style-sheet';
-import realm, { addReview, addBrand, addRestaurant, numberOfBrandsByName, numberOfRestaurantsByName} from "./components/Database";
+import realm, { addReview, addBrand, addRestaurant, numberOfBrandsByName, numberOfRestaurantsByName, doesReviewExist} from "./components/Database";
 
 const starRatings = [1,2,3,4,5];
 
 function submission(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex, navigation){
     if(itemName != '' && RestaurantOrBrand != '' && restaurantOrBrandName != ''){
-        addReview(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex)
-        //add new Brand/Restaurant if needed
-        if(RestaurantOrBrand == 'Brand'){
-            //check if brand already in Brands
-            if(numberOfBrandsByName(restaurantOrBrandName) == 0) {
-                addBrand(restaurantOrBrandName) //add if not found
-        }}
-        else if(RestaurantOrBrand == 'Restaurant'){
-            //check if restaurant already in Restaurants
-            if(numberOfRestaurantsByName(restaurantOrBrandName) == 0) {
-                addRestaurant(restaurantOrBrandName) //add if not found
-        }}
-        //see if you can reset to default values
-        navigation.navigate('Display Review', {
-            EntityName : restaurantOrBrandName,
-            Item: itemName
-          })
+        if(doesReviewExist(RestaurantOrBrand, restaurantOrBrandName, itemName) == false) {
+            addReview(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex)
+            //add new Brand/Restaurant if needed
+            if(RestaurantOrBrand == 'Brand'){
+                //check if brand already in Brands
+                if(numberOfBrandsByName(restaurantOrBrandName) == 0) {
+                    addBrand(restaurantOrBrandName) //add if not found
+            }}
+            else if(RestaurantOrBrand == 'Restaurant'){
+                //check if restaurant already in Restaurants
+                if(numberOfRestaurantsByName(restaurantOrBrandName) == 0) {
+                    addRestaurant(restaurantOrBrandName) //add if not found
+            }}
+            //navigate out of page to home then displayreview
+            navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [
+                    { name: 'Home' },
+                    { name: 'Display Review',
+                      params: { EntityName: restaurantOrBrandName, Item: itemName },
+                    },
+                  ],
+                })
+              );
+        }
+        else {
+            alert("Review already exists!")
+        }
     }
     else {
         alert("Missing inputs detected!")

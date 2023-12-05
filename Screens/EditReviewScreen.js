@@ -11,52 +11,57 @@ import KeyboardAvoidingWrapper from "./components/KeyboardAvoidingView";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Triangle from "react-native-triangle";
 import {AddEditReviewStyles, ratingStyle} from './components/style-sheet';
-import realm, { addReview, deleteReview, getReviewsByTypeNameAndItemName, numberOfReviewsByTypeName, addBrand, deleteBrand, numberOfBrandsByName, addRestaurant, numberOfRestaurantsByName, deleteRestaurant} from "./components/Database";
+import realm, { addReview, deleteReview, getReviewsByTypeNameAndItemName, numberOfReviewsByTypeName, addBrand, deleteBrand, numberOfBrandsByName, addRestaurant, numberOfRestaurantsByName, deleteRestaurant, doesReviewExist} from "./components/Database";
 
 const starRatings = [1,2,3,4,5];
 
 function submission(review, itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex, navigation){
     if(itemName != '' && RestaurantOrBrand != '' && restaurantOrBrandName != ''){
-        //delete old Brand/Restaurant if needed
-        if(review.Type == 'Brand'){
-            //check if any more reviews for that Brand
-            if(numberOfReviewsByTypeName(review.TypeName, review.Type) == 1) {
-                deleteBrand(review.TypeName) //delete if none
-        }}
-        else { //if review.Type != 'Brand' ( == 'Restaurant')
-            //check if any more reviews for that Restaurant
-            if(numberOfReviewsByTypeName(review.TypeName, review.Type) == 1) {
-                deleteRestaurant(review.TypeName) //delete if none
-        }}
+        if(doesReviewExist(RestaurantOrBrand, restaurantOrBrandName, itemName) == false) {
+            //delete old Brand/Restaurant if needed
+            if(review.Type == 'Brand'){
+                //check if any more reviews for that Brand
+                if(numberOfReviewsByTypeName(review.TypeName, review.Type) == 1) {
+                    deleteBrand(review.TypeName) //delete if none
+            }}
+            else { //if review.Type != 'Brand' ( == 'Restaurant')
+                //check if any more reviews for that Restaurant
+                if(numberOfReviewsByTypeName(review.TypeName, review.Type) == 1) {
+                    deleteRestaurant(review.TypeName) //delete if none
+            }}
 
-        deleteReview(review.Type, review.TypeName, review.ItemName)
+            deleteReview(review.Type, review.TypeName, review.ItemName)
 
-        addReview(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex)
+            addReview(itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex)
         
-        //add new Brand/Restaurant if needed
-        if(RestaurantOrBrand == 'Brand'){
-            //check if brand already in Brands
-            if(numberOfBrandsByName(restaurantOrBrandName) == 0) {
-                addBrand(restaurantOrBrandName) //add if not found
-        }}
-        else {
-            //check if restaurant already in Restaurants
-            if(numberOfRestaurantsByName(restaurantOrBrandName) == 0) {
-                addRestaurant(restaurantOrBrandName) //add if not found
-        }}
+            //add new Brand/Restaurant if needed
+            if(RestaurantOrBrand == 'Brand'){
+                //check if brand already in Brands
+                if(numberOfBrandsByName(restaurantOrBrandName) == 0) {
+                    addBrand(restaurantOrBrandName) //add if not found
+            }}
+            else {
+                //check if restaurant already in Restaurants
+                if(numberOfRestaurantsByName(restaurantOrBrandName) == 0) {
+                    addRestaurant(restaurantOrBrandName) //add if not found
+            }}
 
-        //navigate out of page to home then displayreview
-        navigation.dispatch(
-            CommonActions.reset({
-              index: 1,
-              routes: [
-                { name: 'Home' },
-                { name: 'Display Review',
-                  params: { EntityName: restaurantOrBrandName, Item: itemName },
-                },
-              ],
-            })
-          );
+            //navigate out of page to home then displayreview
+            navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [
+                    { name: 'Home' },
+                    { name: 'Display Review',
+                      params: { EntityName: restaurantOrBrandName, Item: itemName },
+                    },
+                  ],
+                })
+              );
+        }
+        else {
+            alert("Review already exists!")
+        }    
     }
     else {
         alert("Missing inputs detected!")
