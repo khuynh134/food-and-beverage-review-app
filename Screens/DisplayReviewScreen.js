@@ -1,10 +1,27 @@
 import React, { useState } from 'react';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, StackActions } from '@react-navigation/native';
 import {View, Text, StyleSheet, Image, ScrollView, TouchableOpacity} from 'react-native';
-import realm, {getReviewsByTypeNameAndItemName} from './components/Database';
+import realm, {getReviewsByTypeNameAndItemName, numberOfReviewsByTypeName, deleteReview, deleteBrand, deleteRestaurant} from './components/Database';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function DisplayReviewScreen({ route }){
+function deleteThisReview(review, navigation) {
+    if(review.Type == 'Brand'){
+        //check if any more reviews for that Brand
+        if(numberOfReviewsByTypeName(review.TypeName, review.Type) == 1) {
+            deleteBrand(review.TypeName) //delete if none
+    }}
+    else { //if review.Type != 'Brand' ( == 'Restaurant')
+        //check if any more reviews for that Restaurant
+        if(numberOfReviewsByTypeName(review.TypeName, review.Type) == 1) {
+            deleteRestaurant(review.TypeName) //delete if none
+    }}
+
+    deleteReview(review.Type, review.TypeName, review.ItemName)
+
+    navigation.dispatch(StackActions.popToTop()); //go back to home
+}
+
+export default function DisplayReviewScreen({ route, navigation }){
 
     const entityName = route.params.EntityName.toString();
     const item = route.params.Item.toString();
@@ -88,10 +105,19 @@ export default function DisplayReviewScreen({ route }){
                 </View>
 
                 <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                    <TouchableOpacity style={styles.EditDeleteButtons}>
+                    <TouchableOpacity style={styles.EditDeleteButtons}
+                        onPress={() => {
+                            navigation.navigate('Edit Review', {
+                              EntityName : review.TypeName,
+                              Item: review.ItemName
+                            })
+                    }}>
                         <Text style={{fontSize: 30, color: "white"}}>Edit</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.EditDeleteButtons}>
+
+                    <TouchableOpacity style={styles.EditDeleteButtons}
+                        onPress={() => { deleteThisReview(review, navigation)
+                    }}>
                         <Text style={{fontSize: 30, color: "white"}}>Delete</Text>
                     </TouchableOpacity>
                 </View>
@@ -165,7 +191,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         margin: 15,
         borderRadius: 5,
-        borderWidth: 2,
+        borderWidth: 3,
         borderColor: '#424b59',
     }
 })
