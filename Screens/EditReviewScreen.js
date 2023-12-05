@@ -182,8 +182,8 @@ export default function EditReviewScreen({ route, navigation }){
                 </TouchableOpacity>
                 <Text style={styles.orText}>OR</Text>
                 <TouchableOpacity   style={[styles.buttons, 
-                                            selectedButton === "Brands" ? styles.selected : styles.unselected]} 
-                                    onPress={() => selectButton('Brands')}>
+                                            selectedButton === "Brand" ? styles.selected : styles.unselected]} 
+                                    onPress={() => selectButton('Brand')}>
                     <Text style={styles.buttonText}>Brand</Text>
                 </TouchableOpacity>
             </View>
