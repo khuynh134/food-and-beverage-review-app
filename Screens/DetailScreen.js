@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, Dimensions, TouchableOpacity} from 'react-native'; 
 import { useRoute } from '@react-navigation/native'; 
 import styles from './style-sheet';
-import realm, {getReviewsByTypeName, deleteAllReviews, getAllReviews} from './components/Database';
+import realm, {getReviewsByTypeName} from './components/Database';
 
 const DetailScreen = ({route, navigation}) => {
     

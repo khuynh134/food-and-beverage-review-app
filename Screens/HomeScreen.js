@@ -7,8 +7,6 @@ import KeyboardAvoidingWrapper from './components/KeyboardAvoidingView';
 import {
   StyleSheet,
   Image, 
-  Pressable, 
-  Button,
   View,
   Text,
   TouchableOpacity,
