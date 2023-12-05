@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { StyleSheet, 
+import {
     View, 
     Text, 
     TouchableOpacity,
@@ -10,6 +10,7 @@ import { useRoute, CommonActions } from '@react-navigation/native';
 import KeyboardAvoidingWrapper from "./components/KeyboardAvoidingView";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Triangle from "react-native-triangle";
+import {AddEditReviewStyles, ratingStyle} from './components/style-sheet';
 import realm, { addReview, deleteReview, getReviewsByTypeNameAndItemName, numberOfReviewsByTypeName, addBrand, deleteBrand, numberOfBrandsByName, addRestaurant, numberOfRestaurantsByName, deleteRestaurant} from "./components/Database";
 
 const starRatings = [1,2,3,4,5];
@@ -147,64 +148,64 @@ export default function EditReviewScreen({ route, navigation }){
 
     return(
         <KeyboardAvoidingWrapper>
-        <View style={styles.container}>
+        <View style={AddEditReviewStyles.container}>
 
-            <View style={styles.picBackdrop}>
+            <View style={AddEditReviewStyles.picBackdrop}>
                 <View style={{backgroundColor: 'white', width: 165, height: 165, justifyContent: "center", alignItems: "center"}}>
-                    <Image style={styles.image} source={images[imgIndex]}></Image>
+                    <Image style={AddEditReviewStyles.image} source={images[imgIndex]}></Image>
                 </View>
             </View>
 
-            <Text style={styles.selectImage}>Select Image:</Text>
-            <View style={styles.selectImageView}>
+            <Text style={AddEditReviewStyles.selectImage}>Select Image:</Text>
+            <View style={AddEditReviewStyles.selectImageView}>
                 <TouchableOpacity onPress={() => setImgIndex(imgIndex - 1)}>
                     <Triangle width={45} height={45} color={'#545F71'} direction={'left'}/>
                 </TouchableOpacity>
-                <Text style={styles.selectImageIndex}>{imgIndex + 1}</Text>
+                <Text style={AddEditReviewStyles.selectImageIndex}>{imgIndex + 1}</Text>
                 <TouchableOpacity onPress={() => setImgIndex(imgIndex + 1)}>
                     <Triangle width={45} height={45} color={'#545F71'} direction={'right'}/>
                 </TouchableOpacity>
             </View>
 
-            <Text style={styles.itemNameText}>Item Name: </Text>
-            <View style={styles.textBox}>
-                <TextInput  style={styles.textInput} 
+            <Text style={AddEditReviewStyles.itemNameText}>Item Name: </Text>
+            <View style={AddEditReviewStyles.textBox}>
+                <TextInput  style={AddEditReviewStyles.textInput} 
                             placeholder="Enter Item Name..."
                             onChangeText={(text) => setItemName(text)}
                             value={itemName}/>
             </View>
 
-            <View style={styles.buttonsContainer}>
-                <TouchableOpacity   style={[styles.buttons,
-                                            selectedButton === "Restaurant" ? styles.selected : styles.unselected]} 
+            <View style={AddEditReviewStyles.buttonsContainer}>
+                <TouchableOpacity   style={[AddEditReviewStyles.buttons,
+                                            selectedButton === "Restaurant" ? AddEditReviewStyles.selected : AddEditReviewStyles.unselected]} 
                                     onPress={() => selectButton('Restaurant')}>
-                    <Text style={styles.buttonText}>Restaurant</Text>
+                    <Text style={AddEditReviewStyles.buttonText}>Restaurant</Text>
                 </TouchableOpacity>
-                <Text style={styles.orText}>OR</Text>
-                <TouchableOpacity   style={[styles.buttons, 
-                                            selectedButton === "Brand" ? styles.selected : styles.unselected]} 
+                <Text style={AddEditReviewStyles.orText}>OR</Text>
+                <TouchableOpacity   style={[AddEditReviewStyles.buttons, 
+                                            selectedButton === "Brand" ? AddEditReviewStyles.selected : AddEditReviewStyles.unselected]} 
                                     onPress={() => selectButton('Brand')}>
-                    <Text style={styles.buttonText}>Brand</Text>
+                    <Text style={AddEditReviewStyles.buttonText}>Brand</Text>
                 </TouchableOpacity>
             </View>
 
-            <Text style={styles.itemNameText} >{RestaurantOrBrand} Name: </Text>
-            <View style={styles.textBox}>
-                <TextInput  style={styles.textInput} 
+            <Text style={AddEditReviewStyles.itemNameText} >{RestaurantOrBrand} Name: </Text>
+            <View style={AddEditReviewStyles.textBox}>
+                <TextInput  style={AddEditReviewStyles.textInput} 
                             placeholder={placeholder}
                             onChangeText={(text) => SetRestaurantOrBrandName(text)}
                             value={restaurantOrBrandName}/>
             </View>
 
-            <View style={styles.ratingContainer}>
-                <Text style={styles.YourRating}>Your Rating:</Text>
+            <View style={AddEditReviewStyles.ratingContainer}>
+                <Text style={AddEditReviewStyles.YourRating}>Your Rating:</Text>
                 <RatingBar/>
             </View>
 
             <View style={{width: '95%'}}>
-                <Text style={styles.notesText}>Notes: </Text>
-                    <ScrollView style={styles.notesTextBox}>
-                        <TextInput style={styles.textInput}
+                <Text style={AddEditReviewStyles.notesText}>Notes: </Text>
+                    <ScrollView style={AddEditReviewStyles.notesTextBox}>
+                        <TextInput style={AddEditReviewStyles.textInput}
                             placeholder="Enter Notes..."
                             onChangeText={(text) => setNotes(text)}
                             value={notes}
@@ -213,10 +214,10 @@ export default function EditReviewScreen({ route, navigation }){
                     </ScrollView>
             </View>
 
-            <View style={styles.SubmitContainer}>
-                <TouchableOpacity   style={styles.Submit}
+            <View style={AddEditReviewStyles.SubmitContainer}>
+                <TouchableOpacity   style={AddEditReviewStyles.Submit}
                                     onPress={() =>  submission(review, itemName, RestaurantOrBrand, restaurantOrBrandName, defaultRating, notes, imgIndex, navigation)}>
-                    <Text style={styles.SubmitText}>Submit</Text>
+                    <Text style={AddEditReviewStyles.SubmitText}>Submit</Text>
                 </TouchableOpacity>
             </View>    
             
@@ -225,150 +226,3 @@ export default function EditReviewScreen({ route, navigation }){
 
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        //backgroundColor: 'red',
-        flex: 1,
-        alignItems: 'center',
-    },
-    picBackdrop: {
-        backgroundColor: '#545F71',
-        width: '100%',
-        height: 185,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    image: {
-        backgroundColor: 'white',
-        width: 155,
-        height: 155,
-    },
-    selectImage: {
-        fontSize: 20
-    },
-    selectImageView: {
-        flexDirection: 'row',
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    selectImageIndex: {
-        backgroundColor: '#D9D9D9',
-        textAlign: "center",
-        fontSize: 24,
-        fontWeight: "bold",
-        margin: 5,
-        paddingHorizontal:12,
-        paddingVertical: 5,
-        borderColor: 'black',
-        borderWidth: 2
-    },
-    itemNameText: {
-        width: '95%',
-        fontSize: 20,
-        fontWeight: "bold"
-    },
-    textBox: {
-        backgroundColor: "white",
-        width: '95%',
-        height: 35,
-        borderColor: '#888888',
-        borderWidth: 2,
-        borderRadius: 5
-    },
-    textInput: {
-        fontSize: 15,
-        paddingHorizontal: 5
-    },
-    buttonsContainer: {
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: 'row',
-        width: '95%',
-        marginTop: 10, 
-        marginBottom: 5,
-    },
-    orText: {
-        padding: 10,
-        fontSize: 20,
-        fontWeight: "bold"
-    },
-    buttons: {
-        borderRadius: 5,
-        justifyContent: "center",
-        alignItems: "center",
-        width: 150,
-        height: 50
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 20,
-        fontWeight: "bold",
-    },
-    unselected: {
-        backgroundColor: '#9CA3AF'
-    },
-    selected: {
-        backgroundColor: '#545F71'
-    },
-    ratingContainer: {
-        //backgroundColor: "red",
-        width: '95%',
-        marginTop: 10,
-        flexDirection: "row",
-    },
-    YourRating: {
-        //backgroundColor: 'red',
-        textAlign: "center",
-        paddingVertical: 4,
-        fontSize: 20,
-        fontWeight: "bold"
-    },
-    notesText: {
-        width: '95%',
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
-    notesTextBox: {
-        backgroundColor: 'white',
-        borderColor: '#9CA3AF',
-        borderWidth: 2,
-        borderRadius: 5,
-        width: '100%',
-        height: 100
-    },
-    SubmitContainer: {
-        height: 70,
-        width: '95%',
-        justifyContent: "center",
-        alignItems: 'center'
-
-    },
-    Submit: {
-        height: '75%',
-        width: '50%',
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: '#545F71',
-        borderRadius: 5
-    },
-    SubmitText: {
-        color: 'white',
-        fontSize: 20,
-        fontWeight: 'bold'
-    }
-
-})
-
-
-const ratingStyle = StyleSheet.create({
-    starStyling: {
-        width: 40,
-        height: 40,
-        resizeMode: 'cover'
-    },
-    starView: {
-        marginLeft: 20,
-        flexDirection: 'row'
-    }
-})

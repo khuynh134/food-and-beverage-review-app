@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, View, Text, FlatList} from 'react-native';
-import styles from './style-sheet';
+import {ListStyles} from './components/style-sheet';
 import realm, {getAllBrands} from './components/Database';
 
 export default function BrandsScreen({ navigation }){
@@ -10,8 +10,8 @@ export default function BrandsScreen({ navigation }){
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item, index}) => {
                 return( 
-                    <View style={styles.listView}>
-                        <Text style={styles.listText}>{`\u2740 ${item.BrandName}`}</Text>
+                    <View style={ListStyles.listView}>
+                        <Text style={ListStyles.listText}>{`\u2740 ${item.BrandName}`}</Text>
                         <Button title="Reviews"
                           onPress = { () => {
                             navigation.navigate('Detail', {
