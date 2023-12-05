@@ -132,6 +132,13 @@ let deleteReview = (_Type, _TypeName, _ItemName) => {
     })
 }
 
+let deleteReviewbyType = (_Type) => {
+    realm.write(() => {
+        realm.delete(realm.objects('Review').filtered('Type LIKE[c] $0', _Type));
+    })
+}
+
+
 export {addRestaurant,
         getAllRestaurants,
         deleteAllRestaurants,
@@ -149,7 +156,8 @@ export {addRestaurant,
         numberOfReviewsByTypeName,
         getReviewsByTypeNameAndItemName,
         deleteAllReviews,
-        deleteReview
+        deleteReview,
+        deleteReviewbyType
     }
 
 let realm = new Realm({schema: [RestaurantSchema, BrandSchema, ReviewSchema], schemaVersion: 7});
