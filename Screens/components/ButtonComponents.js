@@ -3,7 +3,7 @@ import {
     View,
     TouchableOpacity,
     Text } from "react-native";
-import { AddEditReviewStyles } from './style-sheet';
+import HomeStyles, { AddEditReviewStyles } from './style-sheet';
 import { CommonActions } from '@react-navigation/native';
 import { addReview,
          addBrand,
@@ -15,6 +15,16 @@ import { addReview,
          numberOfRestaurantsByName,
          numberOfReviewsByTypeName,
          doesReviewExist} from "./Database";
+
+function PageSelectionButton({page, navigation}){
+    return(
+        <TouchableOpacity style={HomeStyles.buttonContainer}
+            onPress={() => {navigation.navigate(page)}}
+            title={page}>
+            <Text style={HomeStyles.buttonText}>{page}</Text>
+        </TouchableOpacity>
+    );
+}
 
 function ChooseBrandorRestaurantButtons({setRestaurantOrBrand, RestaurantOrBrand, setPlaceholder}) {
     
@@ -101,4 +111,4 @@ function SubmitReviewButton({reviewProperties, navigation, oldReview = null}){
     )
 }
 
-export {ChooseBrandorRestaurantButtons, SubmitReviewButton}
+export { PageSelectionButton, ChooseBrandorRestaurantButtons, SubmitReviewButton}

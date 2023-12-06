@@ -1,21 +1,20 @@
 import React from 'react'; 
 import logo from './assets/FABRAlogo.png';
 import HomeStyles from './components/style-sheet';
-import SearchBar from './components/SearchBar';
 import SearchBarWithSuggestions from './components/SearchBarWithSuggestions'; 
 import KeyboardAvoidingWrapper from './components/KeyboardAvoidingView';
+import { PageSelectionButton } from './components/ButtonComponents';
 import {
   Image, 
   View,
   Text,
-  TouchableOpacity,
   SafeAreaView, 
 } from 'react-native';
 
 
 const Home = ({ navigation }) => {
-    
     console.log(logo);
+
     return (
         <KeyboardAvoidingWrapper>
         <SafeAreaView style={HomeStyles.container}>
@@ -25,26 +24,14 @@ const Home = ({ navigation }) => {
         
             <View style={{marginTop: 150}}>
                 <SearchBarWithSuggestions/>
-                <TouchableOpacity style={HomeStyles.buttonContainer}
-                    onPress={() => {navigation.navigate('Restaurants')}}
-                    title='Restaurants'>
-                    <Text style={HomeStyles.buttonText}>Restaurants</Text>
-                </TouchableOpacity>
-    
-                <TouchableOpacity style={HomeStyles.buttonContainer}
-                    onPress={() => {navigation.navigate('Brands')}}
-                    title='Brands'>
-                    <Text style={HomeStyles.buttonText}>Brands</Text>
-                </TouchableOpacity>
-    
-                <TouchableOpacity style={HomeStyles.buttonContainer}
-                    onPress={()=> {navigation.navigate('Add Item')}}
-                    title='Add Item'>
-                    <Text style={HomeStyles.buttonText}>+ Add Item</Text>
-                </TouchableOpacity>
+                
+                <PageSelectionButton page={'Restaurants'} navigation={navigation}/>
+
+                <PageSelectionButton page={'Brands'} navigation={navigation}/>
+
+                <PageSelectionButton page={'Add Item'} navigation={navigation}/>
             </View>
 
-    
         </SafeAreaView>
         </KeyboardAvoidingWrapper>
     );
