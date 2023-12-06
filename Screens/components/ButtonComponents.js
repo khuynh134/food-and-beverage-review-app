@@ -68,23 +68,30 @@ function ChooseBrandorRestaurantButtons({setRestaurantOrBrand, RestaurantOrBrand
 
 function submission(reviewProperties, navigation, oldReview){
     if(reviewProperties[0] != '' && reviewProperties[1] != '' && reviewProperties[2] != ''){
-        if(doesReviewExist(reviewProperties[1], reviewProperties[2], reviewProperties[0]) == false) {
-            if(oldReview != null) {
-                //delete old Brand/Restaurant if needed
-                if(oldReview.Type == 'Brand'){
-                    //check if any more reviews for that Brand
-                    if(numberOfReviewsByTypeName(oldReview.TypeName, oldReview.Type) == 1) {
-                        deleteBrand(oldReview.TypeName) //delete if none
-                }}
-                else { //if review.Type != 'Brand' ( == 'Restaurant')
-                    //check if any more reviews for that Restaurant
-                    if(numberOfReviewsByTypeName(oldReview.TypeName, oldReview.Type) == 1) {
-                        deleteRestaurant(oldReview.TypeName) //delete if none
-                }}
+        const oldItem = oldReview.ItemName
+        const oldType = oldReview.Type
+        const oldTypeName = oldReview.TypeName
+        const oldRating = oldReview.Rating
+        const oldNotes = oldReview.Notes
+        const oldIndex = oldReview.ImageIndex
 
-                deleteReview(oldReview.Type, oldReview.TypeName, oldReview.ItemName)
-            }
-            
+        if(oldReview != null) {
+            //delete old Brand/Restaurant if needed
+            if(oldReview.Type == 'Brand'){
+                //check if any more reviews for that Brand
+                if(numberOfReviewsByTypeName(oldReview.TypeName, oldReview.Type) == 1) {
+                    deleteBrand(oldReview.TypeName) //delete if none
+            }}
+            else { //if review.Type != 'Brand' ( == 'Restaurant')
+                //check if any more reviews for that Restaurant
+                if(numberOfReviewsByTypeName(oldReview.TypeName, oldReview.Type) == 1) {
+                    deleteRestaurant(oldReview.TypeName) //delete if none
+            }}
+            //delete old review
+            deleteReview(oldReview.Type, oldReview.TypeName, oldReview.ItemName)
+        }
+
+        if(doesReviewExist(reviewProperties[1], reviewProperties[2], reviewProperties[0]) == false) {
             addReview(reviewProperties[0], reviewProperties[1], reviewProperties[2], reviewProperties[3], reviewProperties[4], reviewProperties[5])
             //add new Brand/Restaurant if needed
             if(reviewProperties[1] == 'Brand'){
@@ -110,7 +117,12 @@ function submission(reviewProperties, navigation, oldReview){
                 })
             );
         }
-        else { alert("Review already exists!") }
+        else { 
+            alert("Review already exists!")
+            if(oldReview != null){
+                addReview(oldItem, oldType, oldTypeName, oldRating, oldNotes, oldIndex)
+            }
+        }
     }
     else { alert("Missing inputs detected!") }
 }
