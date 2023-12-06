@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Button, View, Text, FlatList} from 'react-native';
 import {ListStyles} from './components/style-sheet';
-import realm, {getAllRestaurants} from './components/Database';
+import {getAllRestaurants} from './components/Database';
 
 export default function RestaurantScreen({ navigation }){
   return(

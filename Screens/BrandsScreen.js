@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, View, Text, FlatList} from 'react-native';
 import {ListStyles} from './components/style-sheet';
-import realm, {getAllBrands} from './components/Database';
+import {getAllBrands} from './components/Database';
 
 export default function BrandsScreen({ navigation }){
       return(
