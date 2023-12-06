@@ -4,7 +4,7 @@ import {
     Text, 
     TouchableOpacity,
     Image,} from "react-native";
-import {AddEditReviewStyles} from './style-sheet';
+import { AddEditReviewStyles, reviewListStyles } from './style-sheet';
 import Triangle from "react-native-triangle";
 
 const images = [
@@ -65,6 +65,12 @@ function ChangeImage({imgIndex, setImageIndex}){
     );
 }
 
-export {ShowImage, ChangeImage}
+const ReviewListImage = ({index}) =>{
+    return(
+        <Image style={reviewListStyles.image} source={images[index]}></Image> 
+    )
+}
+
+export {ShowImage, ChangeImage, ReviewListImage}
 
 export default images;

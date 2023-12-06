@@ -2,13 +2,15 @@ import React, {useState} from "react";
 import {  
     View,
     TouchableOpacity,
-    Image,} from "react-native";
-import {AddEditReviewStyles, ratingStyle} from './style-sheet';
+    Image,
+    Text } from "react-native";
+import { ratingStyle, reviewListStyles } from './style-sheet';
 
 const RatingsConstants = {
     starRatings: [1,2,3,4,5],
     StarEmpty: require('../assets/Star_Empty.png'),
     StarFull: require('../assets/star_full.png'),
+    allBoxColors: ['white','#ff0000','#ffa700','#fff400','#a3ff00','#2cba00'],
 }
 
 function RatingBar({setRating, currentRating}){
@@ -30,6 +32,25 @@ function RatingBar({setRating, currentRating}){
     );
 }
 
-export {};
+function CurrentRating({rating}){
+    let backgroundColor = RatingsConstants.allBoxColors[rating]
+
+    return(
+        <View style={{flexDirection: 'row'}}>
+            {
+                RatingsConstants.starRatings.map((item, key) =>   
+                    <Image style={reviewListStyles.stars}
+                        key={key.toString()}
+                        source={item <= rating ? RatingsConstants.StarFull : RatingsConstants.StarEmpty}/>
+                )
+            }
+            <View style={[reviewListStyles.ratingsBox, { backgroundColor }]}>
+                <Text style={reviewListStyles.ratingNum}>{rating}</Text>
+            </View>
+        </View>
+    );
+}
+
+export {CurrentRating};
 
 export default RatingBar;
