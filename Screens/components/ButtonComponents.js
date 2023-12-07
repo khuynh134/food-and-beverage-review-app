@@ -67,7 +67,6 @@ function ChooseBrandorRestaurantButtons({setRestaurantOrBrand, RestaurantOrBrand
 }
 
 function deleteThisReview(type, typeName, itemName, navigation = null) {
-    console.log(type)
     if(type == 'Brand'){
         //check if any more reviews for that Brand
         if(numberOfReviewsByTypeName(typeName, type) == 1) {
@@ -93,8 +92,6 @@ function submission({reviewProperties, navigation, oldReview = null}){
     const oldRating = oldReview ? oldReview.Rating : null
     const oldNotes = oldReview ? oldReview.Notes : null
     const oldIndex = oldReview ? oldReview.ImageIndex : null
-    console.log(oldType)
-    console.log(oldReview)
 
     if(reviewProperties[0] != '' && reviewProperties[1] != '' && reviewProperties[2] != ''){
         oldReview ? deleteThisReview(oldType, oldTypeName, oldItem) : doesReviewExist(reviewProperties[1], reviewProperties[2], reviewProperties[0]);
