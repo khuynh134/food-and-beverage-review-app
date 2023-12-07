@@ -55,7 +55,7 @@ export default function AddItemScreen({ navigation }){
 
             <NotesInput notes={notes} setNotes={setNotes}/>
 
-            <SubmitReviewButton reviewProperties={reviewProperties} navigation={navigation}/>   
+            <SubmitReviewButton reviewProperties={reviewProperties} navigation={navigation} oldReview={null}/>   
             
         </View>
         </KeyboardAvoidingWrapper>

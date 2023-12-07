@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {  
     View,
     TouchableOpacity,
@@ -66,37 +66,38 @@ function ChooseBrandorRestaurantButtons({setRestaurantOrBrand, RestaurantOrBrand
     )
 }
 
-function deleteThisReview(review, navigation = null) {
-    if(review.Type == 'Brand'){
+function deleteThisReview(type, typeName, itemName, navigation = null) {
+    console.log(type)
+    if(type == 'Brand'){
         //check if any more reviews for that Brand
-        if(numberOfReviewsByTypeName(review.TypeName, review.Type) == 1) {
-            deleteBrand(review.TypeName) //delete if none
+        if(numberOfReviewsByTypeName(typeName, type) == 1) {
+            deleteBrand(typeName) //delete if none
     }}
     else { //if review.Type != 'Brand' ( == 'Restaurant')
         //check if any more reviews for that Restaurant
-        if(numberOfReviewsByTypeName(review.TypeName, review.Type) == 1) {
-            deleteRestaurant(review.TypeName) //delete if none
+        if(numberOfReviewsByTypeName(typeName, type) == 1) {
+            deleteRestaurant(typeName) //delete if none
     }}
 
-    deleteReview(review.Type, review.TypeName, review.ItemName)
+    deleteReview(type, typeName, itemName)
 
     if(navigation != null){
         navigation.dispatch(StackActions.popToTop()); //go back to home
     }
 }
 
-function submission(reviewProperties, navigation, oldReview){
-    if(reviewProperties[0] != '' && reviewProperties[1] != '' && reviewProperties[2] != ''){
-        const oldItem = oldReview.ItemName
-        const oldType = oldReview.Type
-        const oldTypeName = oldReview.TypeName
-        const oldRating = oldReview.Rating
-        const oldNotes = oldReview.Notes
-        const oldIndex = oldReview.ImageIndex
+function submission({reviewProperties, navigation, oldReview = null}){
+    const oldItem = oldReview ? oldReview.ItemName : null
+    const oldType = oldReview ? oldReview.Type : null
+    const oldTypeName = oldReview ? oldReview.TypeName : null
+    const oldRating = oldReview ? oldReview.Rating : null
+    const oldNotes = oldReview ? oldReview.Notes : null
+    const oldIndex = oldReview ? oldReview.ImageIndex : null
+    console.log(oldType)
+    console.log(oldReview)
 
-        if(oldReview != null) {
-            deleteThisReview(oldReview)
-        }
+    if(reviewProperties[0] != '' && reviewProperties[1] != '' && reviewProperties[2] != ''){
+        oldReview ? deleteThisReview(oldType, oldTypeName, oldItem) : doesReviewExist(reviewProperties[1], reviewProperties[2], reviewProperties[0]);
 
         if(doesReviewExist(reviewProperties[1], reviewProperties[2], reviewProperties[0]) == false) {
             addReview(reviewProperties[0], reviewProperties[1], reviewProperties[2], reviewProperties[3], reviewProperties[4], reviewProperties[5])
@@ -152,7 +153,7 @@ function SubmitReviewButton({reviewProperties, navigation, oldReview = null}){
     return(
         <View style={AddEditReviewStyles.SubmitContainer}>
             <TouchableOpacity   style={AddEditReviewStyles.Submit}
-                                onPress={() =>  submission(reviewProperties, navigation, oldReview)}>
+                                onPress={() =>  submission({reviewProperties, navigation, oldReview})}>
                 <Text style={AddEditReviewStyles.SubmitText}>Submit</Text>
             </TouchableOpacity>
         </View> 
@@ -162,10 +163,15 @@ function SubmitReviewButton({reviewProperties, navigation, oldReview = null}){
 function DeleteReviewButton({review, navigation}){
     return(
         <TouchableOpacity style={displayReviewStyles.EditDeleteButtons}
-            onPress={() => { deleteThisReview(review, navigation) }}>
+            onPress={() => { deleteThisReview(review.Type, review.TypeName, review.ItemName, navigation) }}>
             <Text style={{fontSize: 30, color: "white"}}>Delete</Text>
         </TouchableOpacity>
     );
 }
 
-export { PageSelectionButton, DisplayThisReviewButton, ChooseBrandorRestaurantButtons, EditButton, SubmitReviewButton, DeleteReviewButton }
+export { PageSelectionButton,
+         DisplayThisReviewButton,
+         ChooseBrandorRestaurantButtons,
+         EditButton,
+         SubmitReviewButton,
+         DeleteReviewButton }
