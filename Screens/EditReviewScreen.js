@@ -38,7 +38,7 @@ export default function EditReviewScreen({ route, navigation }){
         <KeyboardAvoidingWrapper>
         <View style={AddEditReviewStyles.container}>
 
-            <ShowImage index={imgIndex}/>
+            <ShowImage index={imgIndex} backdropHeight={185} imageHtWd={165}/>
             <Text style={AddEditReviewStyles.selectImage}>Select Image:</Text>
             <ChangeImage imgIndex={imgIndex} setImageIndex={setImageIndex}/>
 

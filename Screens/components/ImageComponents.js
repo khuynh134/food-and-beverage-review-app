@@ -4,7 +4,7 @@ import {
     Text, 
     TouchableOpacity,
     Image,} from "react-native";
-import { AddEditReviewStyles, reviewListStyles } from './style-sheet';
+import { AddEditReviewStyles, displayReviewStyles, reviewListStyles } from './style-sheet';
 import Triangle from "react-native-triangle";
 
 const images = [
@@ -41,11 +41,12 @@ function getIndex( index ) {
         return(0)
 }
 
-function ShowImage({index}){
+function ShowImage({index, backdropHeight, imageHtWd}){
+    let backdrop = backdropHeight === 275 ? displayReviewStyles.pictureBackDrop : AddEditReviewStyles.picBackdrop
     return(
-        <View style={AddEditReviewStyles.picBackdrop}>
-            <View style={{backgroundColor: 'white', width: 165, height: 165, justifyContent: "center", alignItems: "center"}}>
-                <Image style={AddEditReviewStyles.image} source={images[index]}></Image>
+        <View style={backdrop}>
+            <View style={{backgroundColor: 'white', width: imageHtWd, height: imageHtWd, justifyContent: "center", alignItems: "center"}}>
+                <Image style={{width: imageHtWd-10, height: imageHtWd-10}} source={images[index]}></Image>
             </View>
         </View>
     );

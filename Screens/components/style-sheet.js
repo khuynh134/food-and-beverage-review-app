@@ -317,9 +317,11 @@ const HomeStyles = StyleSheet.create({
     Container: {
         flex: 1,
         alignItems: 'center',
+        width: '100%'
     },
     scrollView: {
         backgroundColor: '#f0fbfa',
+        width: '95%',
     },
     pictureBackDrop: {
         width: '100%', 
