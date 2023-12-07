@@ -3,8 +3,8 @@ import {
     View,
     TouchableOpacity,
     Text } from "react-native";
-import HomeStyles, { AddEditReviewStyles, reviewListStyles } from './style-sheet';
-import { CommonActions } from '@react-navigation/native';
+import HomeStyles, { AddEditReviewStyles, reviewListStyles, displayReviewStyles } from './style-sheet';
+import { CommonActions, StackActions } from '@react-navigation/native';
 import { addReview,
          addBrand,
          addRestaurant,
@@ -66,6 +66,25 @@ function ChooseBrandorRestaurantButtons({setRestaurantOrBrand, RestaurantOrBrand
     )
 }
 
+function deleteThisReview(review, navigation = null) {
+    if(review.Type == 'Brand'){
+        //check if any more reviews for that Brand
+        if(numberOfReviewsByTypeName(review.TypeName, review.Type) == 1) {
+            deleteBrand(review.TypeName) //delete if none
+    }}
+    else { //if review.Type != 'Brand' ( == 'Restaurant')
+        //check if any more reviews for that Restaurant
+        if(numberOfReviewsByTypeName(review.TypeName, review.Type) == 1) {
+            deleteRestaurant(review.TypeName) //delete if none
+    }}
+
+    deleteReview(review.Type, review.TypeName, review.ItemName)
+
+    if(navigation != null){
+        navigation.dispatch(StackActions.popToTop()); //go back to home
+    }
+}
+
 function submission(reviewProperties, navigation, oldReview){
     if(reviewProperties[0] != '' && reviewProperties[1] != '' && reviewProperties[2] != ''){
         const oldItem = oldReview.ItemName
@@ -76,19 +95,7 @@ function submission(reviewProperties, navigation, oldReview){
         const oldIndex = oldReview.ImageIndex
 
         if(oldReview != null) {
-            //delete old Brand/Restaurant if needed
-            if(oldReview.Type == 'Brand'){
-                //check if any more reviews for that Brand
-                if(numberOfReviewsByTypeName(oldReview.TypeName, oldReview.Type) == 1) {
-                    deleteBrand(oldReview.TypeName) //delete if none
-            }}
-            else { //if review.Type != 'Brand' ( == 'Restaurant')
-                //check if any more reviews for that Restaurant
-                if(numberOfReviewsByTypeName(oldReview.TypeName, oldReview.Type) == 1) {
-                    deleteRestaurant(oldReview.TypeName) //delete if none
-            }}
-            //delete old review
-            deleteReview(oldReview.Type, oldReview.TypeName, oldReview.ItemName)
+            deleteThisReview(oldReview)
         }
 
         if(doesReviewExist(reviewProperties[1], reviewProperties[2], reviewProperties[0]) == false) {
@@ -127,6 +134,20 @@ function submission(reviewProperties, navigation, oldReview){
     else { alert("Missing inputs detected!") }
 }
 
+function EditButton({review, navigation}){
+    return(
+        <TouchableOpacity style={displayReviewStyles.EditDeleteButtons}
+            onPress={() => {
+                navigation.navigate('Edit Review', {
+                  EntityName : review.TypeName,
+                  Item: review.ItemName
+                })
+            }}>
+            <Text style={{fontSize: 30, color: "white"}}>Edit</Text>
+        </TouchableOpacity>
+    );
+}
+
 function SubmitReviewButton({reviewProperties, navigation, oldReview = null}){
     return(
         <View style={AddEditReviewStyles.SubmitContainer}>
@@ -138,4 +159,13 @@ function SubmitReviewButton({reviewProperties, navigation, oldReview = null}){
     )
 }
 
-export { PageSelectionButton, DisplayThisReviewButton, ChooseBrandorRestaurantButtons, SubmitReviewButton}
+function DeleteReviewButton({review, navigation}){
+    return(
+        <TouchableOpacity style={displayReviewStyles.EditDeleteButtons}
+            onPress={() => { deleteThisReview(review, navigation) }}>
+            <Text style={{fontSize: 30, color: "white"}}>Delete</Text>
+        </TouchableOpacity>
+    );
+}
+
+export { PageSelectionButton, DisplayThisReviewButton, ChooseBrandorRestaurantButtons, EditButton, SubmitReviewButton, DeleteReviewButton }

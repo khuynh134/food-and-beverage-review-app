@@ -3,7 +3,7 @@ import { Text, View, FlatList, TouchableOpacity} from 'react-native';
 import { useRoute } from '@react-navigation/native'; 
 import { reviewListStyles } from './components/style-sheet';
 import { getReviewsByTypeName } from './components/Database';
-import { CurrentRating } from './components/RatingsComponents';
+import { DisplayRating } from './components/RatingsComponents';
 import { ReviewListImage } from './components/ImageComponents';
 import { DisplayThisReviewButton } from './components/ButtonComponents';
 
@@ -24,7 +24,7 @@ const DetailScreen = ({route, navigation}) => {
                         <DisplayThisReviewButton item={item} navigation={navigation}/>
                         <Text style={reviewListStyles.cardText}>{item.ItemName}</Text>
                         <View style={reviewListStyles.displayRatings}>
-                            <CurrentRating rating={item.Rating}/>
+                            <DisplayRating rating={item.Rating}/>
                         </View>
                         <Text style={reviewListStyles.cardNotes}>{item.Notes}</Text>
                     </View>

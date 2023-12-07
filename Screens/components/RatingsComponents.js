@@ -32,7 +32,7 @@ function RatingBar({setRating, currentRating}){
     );
 }
 
-function CurrentRating({rating}){
+function DisplayRating({rating}){
     let backgroundColor = RatingsConstants.allBoxColors[rating]
 
     return(
@@ -51,6 +51,6 @@ function CurrentRating({rating}){
     );
 }
 
-export {CurrentRating};
+export { DisplayRating };
 
 export default RatingBar;
